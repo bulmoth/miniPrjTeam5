@@ -1,5 +1,7 @@
 package main;
 
+import util.MyUtil;
+
 public class CustomerMain {
 	
 	private int selectNum;
@@ -34,7 +36,7 @@ public class CustomerMain {
 		case 1 : 
 			break; // 로그인
 		case 2 : 
-			break; //상품구매
+			new CustomerShop().Shop(); break; //상품구매
 		case 3 : 
 			break; //배송 조회
 		case 4 : 
