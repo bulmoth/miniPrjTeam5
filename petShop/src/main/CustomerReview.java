@@ -23,17 +23,17 @@ public class CustomerReview {
 			
 			//안내 문구 출력
 			//입력 받기 (제목, 내용)
-			System.out.println("===== 게시글 작성 =====");
+			System.out.println("===== 리뷰 작성 =====");
 			System.out.print("제목 : ");
 			String title = MyUtil.sc.nextLine();
 			System.out.print("내용 : ");
 			String content = MyUtil.sc.nextLine();
 			
 			
-			//디비에 저장
+			
 			//연결 얻기
 			Connection conn = OracleDB.getOracleConnection();
-			//INSERT 쿼리 날리기
+			//INSERT
 			String sql = "INSERT INTO REVIEW(NO, TITLE, CONTENT, WRITER_NO, REGISTER_DATE, DELETE_YN)"
 					+ "VALUES(REVIEW_NO_SEQ.NEXTVAL, ?, ?, ?, SYSDATE, 'N')";
 			PreparedStatement pstmt = null;
@@ -56,10 +56,10 @@ public class CustomerReview {
 			}
 		}
 
-		//게시글 목록 조회
+		//리뷰 목록 조회
 		public void showList() {
-			System.out.println("===== 게시글 목록 조회 =====");
-			//게시글 조회해서 보여주기
+			System.out.println("===== 리뷰 목록 조회 =====");
+			//리뷰 목록 조회
 			
 			Connection conn = OracleDB.getOracleConnection();
 			String sql = "SELECT * FROM REVIEW WHERE DELETE_YN = 'N' ORDER BY REGISTER_DATE DESC";
@@ -69,18 +69,18 @@ public class CustomerReview {
 				ResultSet rs = pstmt.executeQuery();
 				
 				
-				System.out.print("글번호");
+				System.out.print("번호");
 				System.out.print(" | ");
-				System.out.print("게시글 제목");
+				System.out.print("리뷰 제목");
 				System.out.print(" | ");
 				System.out.print("작성자 번호");
 				System.out.print(" | ");
-				System.out.print("게시글 작성일");
+				System.out.print("리뷰 작성일");
 				System.out.println("\n-------------------------------");
 				
 				while(rs.next()) {
-					int no = rs.getInt("NO"); //게시글 번호
-					String title = rs.getString("TITLE");//게시글 제목
+					int no = rs.getInt("NO"); //리뷰 번호
+					String title = rs.getString("TITLE");//리뷰 제목
 					int writerNo = rs.getInt("WRITER_NO"); //작성자 회원 번호
 					Timestamp regDate = rs.getTimestamp("REGISTER_DATE");
 					
@@ -96,20 +96,19 @@ public class CustomerReview {
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}
-			//파이널리 블럭에서 자원 반납
+			}finally {
+				
+			}//반납
 			
-			
-			//게시판 상세보기 메소드 호출
+			//게시판 상세보기 호출
 			showBoardDetail();
 			
 		}//showList
 		
-		//게시글 상세 조회
+		//리뷰 상세 조회
 		public void showBoardDetail() {
 			
-			// 게시글 번호 (no) 필요함
-			// 출력문 추가
+		
 			System.out.print("조회할 게시글 번호 입력 : ");
 			int no = MyUtil.scInt();
 			
@@ -136,7 +135,7 @@ public class CustomerReview {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
-				//자원 반납
+				//반납
 			}
 		}
 
