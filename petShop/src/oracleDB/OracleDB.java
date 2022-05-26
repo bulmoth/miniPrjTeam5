@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 public class OracleDB {
 	
+	//오라클 DB 클래스입니다
 	public static Connection getOracleConnection() {
 		
 		String driver = "oracle.jdbc.driver.OracleDriver";
