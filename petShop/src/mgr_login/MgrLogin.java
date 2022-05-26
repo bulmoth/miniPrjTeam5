@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import oracleDB.OracleDB;
 import util.MyUtil;
 
-public class Mgr_login {
+public class MgrLogin {
 	
-	public boolean mgr_login() {
+	public boolean mgrLogin() {
 		
 		System.out.println("===== 관리자 로그인 =====");
 		// 아이디, 비번 받기
@@ -45,6 +45,13 @@ public class Mgr_login {
 		System.out.println("아이디와 비밀번호를 다시 확인하십시오.");
 		return false;
 		
-	}//mgr_login
+	}//mgrLogin
+	
+	
+	public void memberMng() {
+		//회원 관리
+		
+		
+	}
 
 }//class
