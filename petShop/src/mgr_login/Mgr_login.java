@@ -32,7 +32,7 @@ public class Mgr_login {
 			rs.next();
 			String dbPwd = rs.getString("ADM_PWD");
 			if(pwd.equals(dbPwd)) {
-				System.out.println("관리자 " + id + "로 로그인 되었습니다.");
+				System.out.println("관리자 ID " + id + " 로그인 되었습니다.");
 				return true;
 			}
 		} catch (SQLException e) {
@@ -42,6 +42,7 @@ public class Mgr_login {
 			OracleDB.close(rs);
 			OracleDB.close(pstmt);
 		}
+		System.out.println("아이디와 비밀번호를 다시 확인하십시오.");
 		return false;
 		
 	}//mgr_login
