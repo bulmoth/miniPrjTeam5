@@ -12,8 +12,8 @@ public class A_0_product {
 	
 	
 	private int selectNum;
-	PreparedStatement pstmt = null;
-    ResultSet rs = null;
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
 	
 	
 	public void item0() {
@@ -44,7 +44,8 @@ public class A_0_product {
 			item0_2();
 			break;
 		case 3 : //관리자 메뉴로 돌아가기
-			///
+			item0_3();
+			break;
 		default : System.out.println("유효한 메뉴가 아닙니다 다시 선택해주세요!"); item0();
 
 	}
@@ -56,17 +57,19 @@ public class A_0_product {
 	public void item0_0() {
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT * FROM PRODUCT_CATEGORY";
+		String sql = "SELECT ROWNUM, CATEGORY, PRD_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT_CATEGORY ORDER BY PRD_NO";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			System.out.println();
-			System.out.println("      카테고리       상품번호          상품이름           상품설명           가격        재고");
-			System.out.println("─────────────────────────────────────────────────────────────────────────────────────────");
+			System.out.println("   번호     카테고리      상품번호       상품이름          상품설명            가격         재고");
+			System.out.println("───────────────────────────────────────────────────────────────────────────────────────────────");
 			System.out.println();
 			while(rs.next()) {
 			 	 
+				
+				 int rownum = rs.getInt("ROWNUM");
 				 String category = rs.getString("CATEGORY");
 		    	 int prd_no = rs.getInt("PRD_NO");
 		    	 String prd_name = rs.getString("PRD_NAME");
@@ -74,22 +77,21 @@ public class A_0_product {
 			     int price = rs.getInt("PRICE");
 		    	 int stock = rs.getInt("STOCK");
 		    	  
-		    	  
-		    	
-		         System.out.print("      "+category+"         ");
-		         System.out.print(prd_no+"          ");
-		         System.out.print(prd_name+"         ");
-		         System.out.print(description+"        ");
-		         System.out.print(price+"         ");
-		         System.out.printf(stock+"        \n");
+
+		    	 System.out.printf("%5d %10s       %-8d %-15s %-15s %-10d %-10d\n", rownum, category, prd_no, prd_name, description, price, stock);
+
 
 			}
 			
 			
 			
-			MyUtil.sc.nextLine();
-		} catch (SQLException e) {
-			System.out.println("상품 내역이 없습니다.");
+			MyUtil.sc.nextLine(); //엔터키 처리
+		} catch (SQLException e) { 
+			System.out.println("상품 조회 중 문제가 발생하였습니다.");
+		}finally {
+			OracleDB.close(conn);
+			OracleDB.close(pstmt);
+			OracleDB.close(rs);
 		}
 	
 		System.out.println();
@@ -113,7 +115,7 @@ public class A_0_product {
 	    	int cat_no = MyUtil.sc.nextInt();
 	    	System.out.print("상품번호 : ");
 	    	int prd_no = MyUtil.sc.nextInt();
-	    	MyUtil.sc.nextLine();
+	    	MyUtil.sc.nextLine(); //엔터키 처리
 	    	System.out.print("상품이름 : ");
 	    	String prd_name = MyUtil.sc.nextLine();
 	    	System.out.print("상품설명 : ");
@@ -137,16 +139,16 @@ public class A_0_product {
 	        	
 	        	//중복없으면 등록함
 	        	String sqlInsert 
-	            = "INSERT INTO PRODUCT(CAT_NO, PRD_NO, PRD_NAME, DESCIRIPTION, PRICE, STOCK) " 
+	            = "INSERT INTO PRODUCT(CAT_NO, PRD_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK) " 
 	            		+ "VALUES(?,?,?,?,?,?)";
-	        	PreparedStatement pstmt2 = conn.prepareStatement(sqlInsert);
-	        	pstmt2.setInt(1, cat_no);
-	            pstmt2.setInt(2, prd_no);
-	            pstmt2.setString(3, prd_name);
-	            pstmt2.setString(4, description);
-	            pstmt2.setInt(5, price);
-	            pstmt2.setInt(6, stock);
-	            int itemResult = pstmt2.executeUpdate();
+	        	pstmt = conn.prepareStatement(sqlInsert);
+	        	pstmt.setInt(1, cat_no);
+	            pstmt.setInt(2, prd_no);
+	            pstmt.setString(3, prd_name);
+	            pstmt.setString(4, description);
+	            pstmt.setInt(5, price);
+	            pstmt.setInt(6, stock);
+	            int itemResult = pstmt.executeUpdate();
 	            
 	            if(itemResult == 1) {
 	           	 System.out.println("정상적으로 상품을 등록하였습니다");
@@ -155,7 +157,11 @@ public class A_0_product {
 
 	    	}catch(SQLException e) {
 	    		System.out.println("상품 등록 중 문제 발생!");
-	    	}
+	    	}finally {
+				OracleDB.close(conn);
+				OracleDB.close(pstmt);
+				OracleDB.close(rs); 
+				}
 
           }
 	    	
@@ -163,22 +169,54 @@ public class A_0_product {
 	    	item0();
 	    	
 	    }
+	    
 	//상품 삭제
 		public void item0_2() {
+			Connection conn = OracleDB.getOracleConnection();
 			
+    		
+    		try {
+    			System.out.println("    삭제할 상품 번호를 입력하세요");
+    			System.out.print("        상품 번호 : ");
+    			int prd_no = MyUtil.sc.nextInt();
+    			MyUtil.sc.nextLine(); //엔터키 제거
+    			
+    			String sqlDelete = "DELETE FROM PRODUCT WHERE PRD_NO = ?";
+    			PreparedStatement pstmt3 = conn.prepareStatement(sqlDelete);
+	        	pstmt3.setInt(1, prd_no);
+	        	
+	        	int deleteResult = pstmt3.executeUpdate();
+	        	//삭제 확인
+	        	if(deleteResult == 1) {
+		           	 System.out.println("정상적으로 상품을 삭제하였습니다");
+	        	}else {
+	        		System.out.println("상품을 삭제하지 못했습니다. 상품번호를 다시 확인해주세요");
+	        	}
+
+	        	}catch (SQLException e){
+	        		System.out.println("상품 삭제 중 문제 발생!");
+	        	}finally {
+	    			OracleDB.close(conn);
+	    			OracleDB.close(pstmt);
+	    			OracleDB.close(rs);
+	    		}
 		
-		
-		
+    		System.out.println("상품 등록 및 삭제 메뉴로 돌아갑니다");
+	    	item0();
 		
 		
 	}
+		public void item0_3() {
+			System.out.println("관리자 메뉴로 돌아갑니다");
+			return;
+		}
 	
 		
 		
-		//테스트용 메서드
-		 public static void main(String[] args) {
-				new A_0_product().item0();
-				
-
-			}
+//		//테스트용 메서드
+//		 public static void main(String[] args) {
+//				new A_0_product().item0();
+//				
+//
+//			}
 }
