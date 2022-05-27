@@ -297,7 +297,7 @@ public class A_0_product {
 		
 		public void cancelItem() {
 			System.out.println("      관리자 메뉴로 돌아갑니다");
-			new AdminMain().adminMain();
+			return;
 		}
 	
 		

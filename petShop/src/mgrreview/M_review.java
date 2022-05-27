@@ -1,4 +1,4 @@
-package mgr_review;
+package mgrreview; //사용안하는 클래스인데 삭제하기 무서워서 그냥 두겠습니다 무시해주세요;'-')>
 
 import java.sql.Connection;
 import java.sql.Date;

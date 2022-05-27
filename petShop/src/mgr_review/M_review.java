@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.InputMismatchException;
 import oracleDB.OracleDB;
-import productAddDelete.AdminMain;
 import util.MyUtil;
 
 public class M_review {
@@ -147,7 +146,7 @@ public class M_review {
 	
 	public void cancelReview() {//관리자 메뉴로 돌아가기
 		System.out.println("      관리자 메뉴로 돌아갑니다");
-		new AdminMain().adminMain();
+		return;
 	
 }
 	
