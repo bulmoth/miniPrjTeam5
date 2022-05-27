@@ -1,7 +1,6 @@
 package mgr_login;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -53,7 +52,11 @@ public class MgrLogin {
 		boolean isCorrect = true; 
 		//회원 관리
 		while(isCorrect) {
-			System.out.println("===== 회원 관리 페이지 =====");
+			System.out.println("======== 회원 관리 페이지 ========");
+			System.out.println();
+			System.out.println("회원 관리 페이지 입니다.");
+			System.out.println("원하시는 기능을 선택하십시오.");
+			System.out.println();
 			System.out.println("1. 회원 조회 및 관리");
 			System.out.println("2. 오늘의 회원 변동");
 			System.out.println("그 외 : 나가기");
@@ -73,6 +76,7 @@ public class MgrLogin {
 	private void memberList() {
 		//회원 조회
 		System.out.println("===== 회원 목록 조회 =====");
+		System.out.println();
 		//회원 번호
 		int mem_no;
 		//연결 얻기
@@ -112,12 +116,14 @@ public class MgrLogin {
 					memWithdraw(mem_no);
 				}else {
 					//커서가 가리키는게 없을 때
+					System.out.println();
 					System.out.println("해당 회원은 이미 탈퇴했거나 존재하지 않습니다.");
 					System.out.println("상위 메뉴로 돌아갑니다.");
 					return;
 				}
 			}
 			//맨 처음으로 -1을 입력으로 받았을 때
+			System.out.println();
 			System.out.println("상위 메뉴로 돌아갑니다.");
 			return;
 			
@@ -190,6 +196,7 @@ public class MgrLogin {
 	private void todayMem() {
 		//오늘의 회원 변동 조회
 		System.out.println("===== 오늘의 회원 변동 사항 =====");
+		System.out.println();
 		int enrollMem = 0;
 		int withdrawMem = 0;
 		
@@ -214,6 +221,7 @@ public class MgrLogin {
 			}
 			System.out.println("오늘 가입한 회원 : " + enrollMem);
 			System.out.println("오늘 탈퇴한 회원 : " + withdrawMem);
+			System.out.println();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -224,6 +232,6 @@ public class MgrLogin {
 			OracleDB.close(rs2);
 		}
 		
-	}
+	}//todayMem
 
 }//class
