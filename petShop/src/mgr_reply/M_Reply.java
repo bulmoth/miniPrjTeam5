@@ -13,32 +13,195 @@ import util.MyUtil;
 public class M_Reply {
 
 	public static int ManagerLoginNo = 1234;
-	public static int MemberLoginNo = 9876;
-	public static int qes_no = 12;
+	public static int Question_no;
+	public static int rep_no;
+//	loginUserNo
 	
 	
+//	======================================================================
+	
+//	고객센터 답변 게시판
+	public void firstPageReply() {
+		while(true) {
+			
+			System.out.println("========================");
+			System.out.println("1. 문의글 확인");
+			System.out.println("2. 답변 하기");
+			System.out.println("3. 답변 목록 확인하기");
+			System.out.println("4. 상위 목록으로 이동");
+			System.out.println("========================");
+			
+			int n = MyUtil.scInt();
+			
+			switch(n) {
+			case 1 : showQesList(); break;
+			case 2 : mgrReply(); break;
+			case 3 : showReply(); break;
+			case 4 : return;
+			
+			default : System.out.println("다시 선택하세요");
+		
+			}
+		
+		}//while
+	}
+	
+//	==================================================================================
+	
+	
+		
+//	    문의 게시판에서 목록가져오기
+		public void showQesList() {
+			
+			System.out.println("===== 답글 목록 조회 =====");
+			
+			//관리자만 답글 목록 확인가능
+			if(ManagerLoginNo == 0 ) {
+					System.out.println("답글 목록 확인을 위해서 관리자로 로그인해 주세요.");
+					return;
+			}
+			
+			//연결얻기
+			Connection conn = OracleDB.getOracleConnection();
+			
+			String sql = "SELECT 질문번호, 질문제목, 질문내용, 질문날짜 FROM 질문테이블 WHERE 질문의_DELETE_YN = 'N' ORDER BY 질문_DATE DESC";
+			
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				System.out.print("질문 번호");
+				System.out.print(" | ");
+				System.out.print("질문 제목");
+				System.out.print(" | ");
+				System.out.print("질문 내용");
+				System.out.print(" | ");
+				System.out.print("질문 날짜");
+				System.out.println("\n=======================================");
+				
+				int no = rs.getInt("질문번호");
+				String title = rs.getString("질문제목");
+				String comment = rs.getString("질문내용");
+				Date rdate = rs.getDate("질문날짜");
+				
+				//질문 번호 저장
+				Question_no = no;
+				
+				System.out.print(no);
+				System.out.print(" | ");
+				System.out.print(title);
+				System.out.print(" | ");
+				System.out.print(comment);
+				System.out.print(" | ");
+				System.out.print(rdate);
+				
+				
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				OracleDB.close(conn);
+				OracleDB.close(pstmt);
+				OracleDB.close(rs);
+			}
+			
+								
+		}//showQesList
+	
+		
+		
+		//고객 게시글 답변 메서드 - mgrReply()
+		public void mgrReply() {
+			
+			//질문 번호로 답글 달기
+			
+			//글 작성자는 관리자로 로그인된 사람만 작성 가능
+			
+			//매니저 로그인 번호로 매니저인지 확인 - loginManagerNo 저장하는 static 변수 필요
+			if(ManagerLoginNo == 0) {
+				System.out.println("관리자만 답글을 쓸 수 있습니다.");
+				return;
+			}
+			
+			
+			
+			//안내 문구 출력 - 답글 입력하기
+			System.out.println("===== 답글 달기 ======");
+			
+			System.out.println("답변 할 질문 번호를 입력해 주세요 : ");
+			rep_no = MyUtil.scInt();
+				
+			System.out.println("답변 할 내용을 입력해 주세요");
+			String reply = MyUtil.sc.nextLine();
+			
+			
+			//답글 달아서 디비에 저장
+			
+			Connection conn = OracleDB.getOracleConnection();
+			
+			String sql = "INSERT INTO MGR_REPLY(REP_NO, 질문번호(), REP_COMMENT, REP_DATE, RTP_DELETE_YN )"
+							+ "VALUES(?, ?, ?, SYSDATE, 'N')";
+			
+			
+			PreparedStatement pstmt = null;
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, rep_no);
+				pstmt.setInt(2, Question_no);
+				pstmt.setString(3, reply);
+				
+				int result = pstmt.executeUpdate();
+				
+				if(rep_no != Question_no){
+					System.out.println("게시글 번호가 다릅니다. ...");
+				}else if(result==1) {
+					System.out.println("게시글 답변 등록 성공 !!!");
+				}else {
+					System.out.println("게시글 답변 등록 실패 ...");
+				}
+			
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				OracleDB.close(conn);
+				OracleDB.close(pstmt);
+			}
+			
+			
+		}//mgrReply
+	
+		
+		
 	//답글 목록 확인하기 메서드 - showReply()
 	
 		public void showReply() {
-			
+			int rep_no = -9999;
 			System.out.println("===== 답글 목록 조회 =====");
 			
 			//관리자만 답글 목록 확인가능
 			if(ManagerLoginNo == 0 ) {
 					System.out.println("관리자만 답글 목록을 볼 수 있습니다.");
 					return;
-			}		
+			}	
 			
 					
 			Connection conn = OracleDB.getOracleConnection();
 			
-			String sql = "SELECT * FROM MGR_REPLY WHERE RTPLY_DELETE_YN = 'N' ORDER BY REPLY_DATE DESC";
+			String sql = "SELECT * FROM M_REPLY WHERE REP_DELETE_YN = 'N' ORDER BY REP_DATE DESC";
 			
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			
 			try {
 				pstmt = conn.prepareStatement(sql);
+				
+				
 				rs = pstmt.executeQuery();
 				
 				System.out.print("답변 번호");
@@ -48,9 +211,9 @@ public class M_Reply {
 				System.out.print("답글 작성일");
 				System.out.println("\n=======================================");
 				
-				int no = rs.getInt("REPLY_NO");
-				String comment = rs.getString("REPLY_COMMENT");
-				Date rdate = rs.getDate("REPLY_DATE");
+				int no = rs.getInt("REP_NO");
+				String comment = rs.getString("REP_COMMENT");
+				Date rdate = rs.getDate("REP_DATE");
 				
 				System.out.print(no);
 				System.out.print(" | ");
@@ -67,83 +230,31 @@ public class M_Reply {
 				OracleDB.close(rs);
 			}
 			
-			//목록을 보여주고 - 답변한 글 선택할 수 있도록 - mgrReply() 메서드 호출
-			mgrReply();
-			
+						
 		}//showReply
 		
 		
+}//class
+
+		//목록상세조회하기
 		
+		
+//입력받은 번호랑 / 질문번호랑 일치하는지
+//pstmt.setInt(1, no);
+//pstmt.setInt(1, rep_no);
+
 //		=================================================
 		
 		
 	
-	//고객 게시글 답변 메서드 - mgrReply()
-	public void mgrReply() {
-		
-		//질문 번호로 답글 달기
-		
-		//글 작성자는 관리자로 로그인된 사람만 작성 가능
-		
-		//매니저 로그인 번호로 매니저인지 확인 - loginManagerNo 저장하는 static 변수 필요
-		if(ManagerLoginNo == 0) {
-			System.out.println("관리자만 답글을 쓸 수 있습니다.");
-			return;
-		}
-		
-		
-		
-		//안내 문구 출력 - 답글 입력하기
-		System.out.println("===== 답글 달기 ======");
-		
-		System.out.println("답변 할 질문 번호를 입력해 주세요 : ");
-		int titleNum = MyUtil.sc.nextInt();//scInt로 처리필요
-		
-			
-		System.out.println("답변 할 내용을 입력해 주세요");
-		String reply = MyUtil.sc.nextLine();
-		
-		
-		//답글 달아서 디비에 저장
-		
-		Connection conn = OracleDB.getOracleConnection();
-		
-		String sql = "INSERT INTO MGR_REPLY(REPLY_NO, Q_NO, REPLY_COMMENT, REPLY_DATE, RTPLY_DELETE_YN )"
-						+ "VALUES(?, ?, ?, SYSDATE, 'N')";
-		
-		
-		PreparedStatement pstmt = null;
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, qes_no);
-			pstmt.setInt(2, qes_no);
-			pstmt.setString(3, reply);
-			
-			int result = pstmt.executeUpdate();
 
-			if(result==1) {
-				System.out.println("게시글 답변 등록 성공 !!!");
-			}else {
-				System.out.println("게시글 답변 등록 실패 ...");
-			}
-			
-		
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			OracleDB.close(conn);
-			OracleDB.close(pstmt);
-		}
-		
-		
-	}//mgrReply
-		
+
 	
 		
-// 5.26 : 내가 답글 작성하고, 답글 작성한 목록 보여주기 까지 진행	
-	
+
+//  고객문의답변 첫 페이지 오면 선택 / 1.문의글 확인(답글달아야할 글) 2.답글달아서 db저장 3.답글달아준 내용확인
+
+
 //	변경할거
 //	문의 게시판 글 - 질문번호, 글 제목 따와서 목록 보여주고
 //	그 목록에서 답글 달 번호 선택하는 작업으로 변경해주기 
@@ -156,4 +267,4 @@ public class M_Reply {
 	
 	
 	
-}//class
+
