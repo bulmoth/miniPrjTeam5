@@ -31,26 +31,26 @@ public class CustomerMain {
 		selectNum = MyUtil.sc.nextInt();
 		
 		switch(selectNum) {
-		case 0 : 
-			break; //회원가입
 		case 1 : 
-			break; // 로그인
+			break; //회원가입
 		case 2 : 
-			new CustomerShop().Shop(); break; //상품구매
+			break; // 로그인
 		case 3 : 
-			break; //배송 조회
+			new CustomerShop().Shop(); break; //상품구매
 		case 4 : 
-			break; //장바구니
+			break; //배송 조회
 		case 5 : 
-			break; // 리뷰 작성
+			break; //장바구니
 		case 6 : 
-			break; //입양
+			new CustomerReview().ReviewMain(); break; // 리뷰 페이지
 		case 7 : 
-			break; //호텔 신청
+			break; //입양
 		case 8 : 
+			break; //호텔 신청
+		case 9 : 
 			break; //고객센터 문의
 			
-		default : System.out.println(); CustomMain();
+		default : System.out.println("선택하신 메뉴는 유효하지 않습니다."); CustomMain();
 		}
 		
 
