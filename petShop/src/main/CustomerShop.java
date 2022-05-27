@@ -54,12 +54,15 @@ public class CustomerShop {
 		System.out.println("=========개 사료 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRD_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 1";
+		String sql = "SELECT PRD_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 1 ORDER BY PRD_NO ASC";
+		
+		ResultSet rs = null;
+
 		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			
 			System.out.print("상품 번호");
 			System.out.print(" | ");
@@ -71,11 +74,12 @@ public class CustomerShop {
 			System.out.print(" | ");
 			System.out.print("재고");
 			System.out.print("\n-------------------------------");
+			System.out.println();
 			
 			while(rs.next()) {
 				int prdNo = rs.getInt("PRD_NO"); //상품 번호
 				String prdName = rs.getString("PRD_NAME");//상품 이름
-				String descrip = rs.getString("\\\"DESCRIPTION\\\""); //상품 설명
+				String descrip = rs.getString("DESCRIPTION"); //상품 설명
 				int price = rs.getInt("PRICE"); //가격
 				int stock = rs.getInt("STOCK"); //남은 재고
 				
@@ -90,20 +94,26 @@ public class CustomerShop {
 				System.out.print(" | ");
 				System.out.print(stock);
 				System.out.println();
+				
+
+				
+	
 			}
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			
 		}
+
 	}//Dogfood
 	
 	public void Catfood() {
 		System.out.println("=========고양이 사료 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 2";
+		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 2 ORDER BY PRD_NO ASC";
 		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -120,11 +130,12 @@ public class CustomerShop {
 			System.out.print(" | ");
 			System.out.print("재고");
 			System.out.print("\n-------------------------------");
+			System.out.println();
 			
 			while(rs.next()) {
 				int prdNo = rs.getInt("PRD_NO"); //상품 번호
 				String prdName = rs.getString("PRD_NAME");//상품 이름
-				String descrip = rs.getString("\\\"DESCRIPTION\\\""); //상품 설명
+				String descrip = rs.getString("DESCRIPTION"); //상품 설명
 				int price = rs.getInt("PRICE"); //가격
 				int stock = rs.getInt("STOCK"); //남은 재고
 				
@@ -139,11 +150,14 @@ public class CustomerShop {
 				System.out.print(" | ");
 				System.out.print(stock);
 				System.out.println();
+				
+	
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
+		
 			
 		}
 		
@@ -153,7 +167,7 @@ public class CustomerShop {
 		System.out.println("=========개 간식 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 3";
+		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 3 ORDER BY PRD_NO ASC";
 		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -170,11 +184,12 @@ public class CustomerShop {
 			System.out.print(" | ");
 			System.out.print("재고");
 			System.out.print("\n-------------------------------");
+			System.out.println();
 			
 			while(rs.next()) {
 				int prdNo = rs.getInt("PRD_NO"); //상품 번호
 				String prdName = rs.getString("PRD_NAME");//상품 이름
-				String descrip = rs.getString("\\\"DESCRIPTION\\\""); //상품 설명
+				String descrip = rs.getString("DESCRIPTION"); //상품 설명
 				int price = rs.getInt("PRICE"); //가격
 				int stock = rs.getInt("STOCK"); //남은 재고
 				
@@ -203,7 +218,7 @@ public class CustomerShop {
 		System.out.println("=========고양이 간식 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 4";
+		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 4 ORDER BY PRD_NO ASC";
 		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -220,11 +235,12 @@ public class CustomerShop {
 			System.out.print(" | ");
 			System.out.print("재고");
 			System.out.print("\n-------------------------------");
+			System.out.println();
 			
 			while(rs.next()) {
 				int prdNo = rs.getInt("PRD_NO"); //상품 번호
 				String prdName = rs.getString("PRD_NAME");//상품 이름
-				String descrip = rs.getString("\\\"DESCRIPTION\\\""); //상품 설명
+				String descrip = rs.getString("DESCRIPTION"); //상품 설명
 				int price = rs.getInt("PRICE"); //가격
 				int stock = rs.getInt("STOCK"); //남은 재고
 				
@@ -253,7 +269,7 @@ public class CustomerShop {
 		System.out.println("=========장난감 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 5";
+		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 5 ORDER BY PRD_NO ASC";
 		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -270,11 +286,12 @@ public class CustomerShop {
 			System.out.print(" | ");
 			System.out.print("재고");
 			System.out.print("\n-------------------------------");
+			System.out.println();
 			
 			while(rs.next()) {
 				int prdNo = rs.getInt("PRD_NO"); //상품 번호
 				String prdName = rs.getString("PRD_NAME");//상품 이름
-				String descrip = rs.getString("\\\"DESCRIPTION\\\""); //상품 설명
+				String descrip = rs.getString("DESCRIPTION"); //상품 설명
 				int price = rs.getInt("PRICE"); //가격
 				int stock = rs.getInt("STOCK"); //남은 재고
 				
@@ -303,7 +320,7 @@ public class CustomerShop {
 		System.out.println("=========기타 상품 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 6";
+		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 6 ORDER BY PRD_NO ASC";
 		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -320,11 +337,12 @@ public class CustomerShop {
 			System.out.print(" | ");
 			System.out.print("재고");
 			System.out.print("\n-------------------------------");
+			System.out.println();
 			
 			while(rs.next()) {
 				int prdNo = rs.getInt("PRD_NO"); //상품 번호
 				String prdName = rs.getString("PRD_NAME");//상품 이름
-				String descrip = rs.getString("\\\"DESCRIPTION\\\""); //상품 설명
+				String descrip = rs.getString("DESCRIPTION"); //상품 설명
 				int price = rs.getInt("PRICE"); //가격
 				int stock = rs.getInt("STOCK"); //남은 재고
 				
@@ -348,6 +366,14 @@ public class CustomerShop {
 		}
 		
 	}//Extra
+	
+	public void GotoCart() {
+		
+		selectNum = MyUtil.sc.nextInt();
+		
+		
+		
+	}
 	
 	
 
