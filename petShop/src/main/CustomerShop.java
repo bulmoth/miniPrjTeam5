@@ -1,6 +1,10 @@
 package main;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import oracleDB.OracleDB;
 import util.MyUtil;
@@ -49,31 +53,88 @@ public class CustomerShop {
 		System.out.println("=========개 사료 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT * FROM PRODUCT";
+		String sql = "SELECT PRD_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 1";
 		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			System.out.print("상품 번호");
+			System.out.print(" | ");
+			System.out.print("상품 이름");
+			System.out.print(" | ");
+			System.out.print("상품 설명");
+			System.out.print(" | ");
+			System.out.print("가격");
+			System.out.print(" | ");
+			System.out.print("재고");
+			System.out.print("\n-------------------------------");
+			
+			while(rs.next()) {
+				int prdNo = rs.getInt("PRD_NO"); //상품 번호
+				String prdName = rs.getString("PRD_NAME");//상품 이름
+				String descrip = rs.getString("\\\"DESCRIPTION\\\""); //상품 설명
+				int price = rs.getInt("PRICE"); //가격
+				int stock = rs.getInt("STOCK"); //남은 재고
+				
+				
+				System.out.print(prdNo);
+				System.out.print(" | ");
+				System.out.print(prdName);
+				System.out.print(" | ");
+				System.out.print(descrip);
+				System.out.print(" | ");
+				System.out.print(price);
+				System.out.print(" | ");
+				System.out.print(stock);
+				System.out.println();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			
+		}
 	}//Dogfood
 	
 	public void Catfood() {
 		System.out.println("=========고양이 사료 페이지입니다.=========");
+		
+		Connection conn = OracleDB.getOracleConnection();
+		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT";
 		
 	}//Catfood
 	
 	public void DogTreat() {
 		System.out.println("=========개 간식 페이지입니다.=========");
 		
+		Connection conn = OracleDB.getOracleConnection();
+		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT";
+		
 	}//DogTreat
 	
 	public void CatTreat() {
 		System.out.println("=========고양이 간식 페이지입니다.=========");
+		
+		Connection conn = OracleDB.getOracleConnection();
+		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT";
+		
 	}//CatTreat
 	
 	public void Toys() {
 		System.out.println("=========장난감 페이지입니다.=========");
 		
+		Connection conn = OracleDB.getOracleConnection();
+		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT";
+		
 	}//Toys
 	
 	public void Extra() {
 		System.out.println("=========기타 상품 페이지입니다.=========");
+		
+		Connection conn = OracleDB.getOracleConnection();
+		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT";
 		
 	}//Extra
 	
