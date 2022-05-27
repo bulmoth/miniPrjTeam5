@@ -102,7 +102,49 @@ public class CustomerShop {
 		System.out.println("=========고양이 사료 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT";
+		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 2";
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			System.out.print("상품 번호");
+			System.out.print(" | ");
+			System.out.print("상품 이름");
+			System.out.print(" | ");
+			System.out.print("상품 설명");
+			System.out.print(" | ");
+			System.out.print("가격");
+			System.out.print(" | ");
+			System.out.print("재고");
+			System.out.print("\n-------------------------------");
+			
+			while(rs.next()) {
+				int prdNo = rs.getInt("PRD_NO"); //상품 번호
+				String prdName = rs.getString("PRD_NAME");//상품 이름
+				String descrip = rs.getString("\\\"DESCRIPTION\\\""); //상품 설명
+				int price = rs.getInt("PRICE"); //가격
+				int stock = rs.getInt("STOCK"); //남은 재고
+				
+				
+				System.out.print(prdNo);
+				System.out.print(" | ");
+				System.out.print(prdName);
+				System.out.print(" | ");
+				System.out.print(descrip);
+				System.out.print(" | ");
+				System.out.print(price);
+				System.out.print(" | ");
+				System.out.print(stock);
+				System.out.println();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			
+		}
 		
 	}//Catfood
 	
@@ -110,7 +152,49 @@ public class CustomerShop {
 		System.out.println("=========개 간식 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT";
+		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 3";
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			System.out.print("상품 번호");
+			System.out.print(" | ");
+			System.out.print("상품 이름");
+			System.out.print(" | ");
+			System.out.print("상품 설명");
+			System.out.print(" | ");
+			System.out.print("가격");
+			System.out.print(" | ");
+			System.out.print("재고");
+			System.out.print("\n-------------------------------");
+			
+			while(rs.next()) {
+				int prdNo = rs.getInt("PRD_NO"); //상품 번호
+				String prdName = rs.getString("PRD_NAME");//상품 이름
+				String descrip = rs.getString("\\\"DESCRIPTION\\\""); //상품 설명
+				int price = rs.getInt("PRICE"); //가격
+				int stock = rs.getInt("STOCK"); //남은 재고
+				
+				
+				System.out.print(prdNo);
+				System.out.print(" | ");
+				System.out.print(prdName);
+				System.out.print(" | ");
+				System.out.print(descrip);
+				System.out.print(" | ");
+				System.out.print(price);
+				System.out.print(" | ");
+				System.out.print(stock);
+				System.out.println();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			
+		}
 		
 	}//DogTreat
 	
@@ -118,7 +202,49 @@ public class CustomerShop {
 		System.out.println("=========고양이 간식 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT";
+		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 4";
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			System.out.print("상품 번호");
+			System.out.print(" | ");
+			System.out.print("상품 이름");
+			System.out.print(" | ");
+			System.out.print("상품 설명");
+			System.out.print(" | ");
+			System.out.print("가격");
+			System.out.print(" | ");
+			System.out.print("재고");
+			System.out.print("\n-------------------------------");
+			
+			while(rs.next()) {
+				int prdNo = rs.getInt("PRD_NO"); //상품 번호
+				String prdName = rs.getString("PRD_NAME");//상품 이름
+				String descrip = rs.getString("\\\"DESCRIPTION\\\""); //상품 설명
+				int price = rs.getInt("PRICE"); //가격
+				int stock = rs.getInt("STOCK"); //남은 재고
+				
+				
+				System.out.print(prdNo);
+				System.out.print(" | ");
+				System.out.print(prdName);
+				System.out.print(" | ");
+				System.out.print(descrip);
+				System.out.print(" | ");
+				System.out.print(price);
+				System.out.print(" | ");
+				System.out.print(stock);
+				System.out.println();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			
+		}
 		
 	}//CatTreat
 	
@@ -126,7 +252,49 @@ public class CustomerShop {
 		System.out.println("=========장난감 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT";
+		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 5";
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			System.out.print("상품 번호");
+			System.out.print(" | ");
+			System.out.print("상품 이름");
+			System.out.print(" | ");
+			System.out.print("상품 설명");
+			System.out.print(" | ");
+			System.out.print("가격");
+			System.out.print(" | ");
+			System.out.print("재고");
+			System.out.print("\n-------------------------------");
+			
+			while(rs.next()) {
+				int prdNo = rs.getInt("PRD_NO"); //상품 번호
+				String prdName = rs.getString("PRD_NAME");//상품 이름
+				String descrip = rs.getString("\\\"DESCRIPTION\\\""); //상품 설명
+				int price = rs.getInt("PRICE"); //가격
+				int stock = rs.getInt("STOCK"); //남은 재고
+				
+				
+				System.out.print(prdNo);
+				System.out.print(" | ");
+				System.out.print(prdName);
+				System.out.print(" | ");
+				System.out.print(descrip);
+				System.out.print(" | ");
+				System.out.print(price);
+				System.out.print(" | ");
+				System.out.print(stock);
+				System.out.println();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			
+		}
 		
 	}//Toys
 	
@@ -134,7 +302,49 @@ public class CustomerShop {
 		System.out.println("=========기타 상품 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT";
+		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, \"DESCRIPTION\", PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 6";
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			System.out.print("상품 번호");
+			System.out.print(" | ");
+			System.out.print("상품 이름");
+			System.out.print(" | ");
+			System.out.print("상품 설명");
+			System.out.print(" | ");
+			System.out.print("가격");
+			System.out.print(" | ");
+			System.out.print("재고");
+			System.out.print("\n-------------------------------");
+			
+			while(rs.next()) {
+				int prdNo = rs.getInt("PRD_NO"); //상품 번호
+				String prdName = rs.getString("PRD_NAME");//상품 이름
+				String descrip = rs.getString("\\\"DESCRIPTION\\\""); //상품 설명
+				int price = rs.getInt("PRICE"); //가격
+				int stock = rs.getInt("STOCK"); //남은 재고
+				
+				
+				System.out.print(prdNo);
+				System.out.print(" | ");
+				System.out.print(prdName);
+				System.out.print(" | ");
+				System.out.print(descrip);
+				System.out.print(" | ");
+				System.out.print(price);
+				System.out.print(" | ");
+				System.out.print(stock);
+				System.out.println();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			
+		}
 		
 	}//Extra
 	
