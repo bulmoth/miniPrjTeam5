@@ -16,6 +16,7 @@ public class CustomerShop {
 	public void Shop() {
 		
 		//상품 구매
+		System.out.println("상품 구매 페이지 입니다.");
 		System.out.println("원하시는 상품을 선택해 주세요.");
 		System.out.println("----------------------");
 		System.out.println("1. 개 사료");
@@ -29,17 +30,17 @@ public class CustomerShop {
 		selectNum = MyUtil.sc.nextInt();
 		
 		switch(selectNum) {
-		case 0 : 
-			new CustomerShop().Dogfood(); break; //개 사료
 		case 1 : 
-			new CustomerShop().Catfood(); break; // 고양이 사료
+			new CustomerShop().Dogfood(); break; //개 사료
 		case 2 : 
-			new CustomerShop().DogTreat(); break; //개 간식
+			new CustomerShop().Catfood(); break; // 고양이 사료
 		case 3 : 
-			new CustomerShop().CatTreat(); break; //고양이 간식
+			new CustomerShop().DogTreat(); break; //개 간식
 		case 4 : 
-			new CustomerShop().Toys(); break; //장난감
+			new CustomerShop().CatTreat(); break; //고양이 간식
 		case 5 : 
+			new CustomerShop().Toys(); break; //장난감
+		case 6 : 
 			new CustomerShop().Extra(); break; // 기타
 			
 		default : System.out.println("선택하신 메뉴는 유효하지 않습니다."); Shop();

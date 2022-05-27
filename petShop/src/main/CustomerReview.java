@@ -31,11 +31,11 @@ public class CustomerReview {
 			selectNum = MyUtil.sc.nextInt();
 			
 			switch(selectNum) {
-			case 0 : 
-				new CustomerReview().write(); break; // 리뷰 작성
 			case 1 : 
-				new CustomerReview().showList(); break; // 리뷰 목록 조회
+				new CustomerReview().write(); break; // 리뷰 작성
 			case 2 : 
+				new CustomerReview().showList(); break; // 리뷰 목록 조회
+			case 3 : 
 				new CustomerReview().showReviewDetail(); break; // 리뷰 상세 조회
 			
 			default : System.out.println("선택하신 메뉴는 유효하지 않습니다."); ReviewMain();
