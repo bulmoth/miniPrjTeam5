@@ -103,6 +103,7 @@ public class Member {
 						System.out.println("회원가입 성공!!!");
 						return true;
 					}
+					
 		} catch (SQLException e) {
 					e.printStackTrace();
 		} finally {
@@ -110,21 +111,19 @@ public class Member {
 					OracleDB.close(pstmt);
 					OracleDB.close(pstmt2);
 					OracleDB.close(rs);
-			
 		}
 		System.out.println("회원가입 실패!!");
 		return false;
 	}
 	
 	
-	public boolean joinUpdate() {
+	public void joinUpdate() {
 		System.out.println("=====회원정보 수정하기=====");
 		//로그인 아닌 경우 회원정보가 수정 불가
 		if(Member.loginUserNo == 0) {
 			System.out.println("로그인 한 유저만 회원정보를 수정할 수 있습니다.");
-			return false;
+			return;
 		} 
-		
 		System.out.print("수정 할 비밀번호 : ");
 		String rePwd = MyUtil.sc.nextLine();
 		System.out.print("수정 할 전화번호 : ");
@@ -161,7 +160,8 @@ public class Member {
 			int result = pstmt2.executeUpdate();
 			if(result == 1) {
 				System.out.println("회원정보 수정 완료!!!");
-				return true;
+			}else {
+				System.out.println("회원정보 수정 실패");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -170,13 +170,6 @@ public class Member {
 			OracleDB.close(pstmt);
 			OracleDB.close(pstmt2);
 			OracleDB.close(rs);
-	
-}
-		System.out.println("회원정보 수정 실패");
-		return false;
-	
-	
-	
-	
+		}
 	}
 }
