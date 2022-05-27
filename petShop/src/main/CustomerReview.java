@@ -56,19 +56,22 @@ public class CustomerReview {
 			String title = MyUtil.sc.nextLine();
 			System.out.print("내용 : ");
 			String content = MyUtil.sc.nextLine();
+			System.out.print("별점 : ");
+			int score = MyUtil.sc.nextInt();
 			
 
 			//연결 얻기
 			Connection conn = OracleDB.getOracleConnection();
 			//INSERT
-			String sql = "INSERT INTO REVIEW(NO, TITLE, CONTENT, WRITER_NO, REGISTER_DATE, DELETE_YN)"
-					+ "VALUES(REVIEW_NO_SEQ.NEXTVAL, ?, ?, ?, SYSDATE, 'N')";
+			String sql = "INSERT INTO REVIEW(REV_NO, PRD_NO, MEM_NO, IMPRESSION, SCORE, REV_DATE, REV_DELETE)"
+					+ "VALUES(REVIEW_NO_SEQ.NEXTVAL, ?, ?, ?, ?, SYSDATE, 'N')";
 			PreparedStatement pstmt = null;
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, title);
 				pstmt.setString(2, content);
-				pstmt.setInt(3, Member.loginUserNo);
+				pstmt.setInt(3, score);
+				pstmt.setInt(4, Member.loginUserNo);
 				int  result = pstmt.executeUpdate();
 				if(result == 1) {
 					System.out.println("리뷰 등록 성공 !");
@@ -89,7 +92,7 @@ public class CustomerReview {
 			//리뷰 목록 조회
 			
 			Connection conn = OracleDB.getOracleConnection();
-			String sql = "SELECT * FROM REVIEW WHERE DELETE_YN = 'N' ORDER BY REGISTER_DATE DESC";
+			String sql = "SELECT * FROM REVIEW WHERE REV_DELETE = 'N' ORDER BY REV_DATE DESC";
 			try {
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 				
@@ -98,7 +101,9 @@ public class CustomerReview {
 				
 				System.out.print("번호");
 				System.out.print(" | ");
-				System.out.print("리뷰 제목");
+				System.out.print("상품 번호");
+				System.out.print(" | ");
+				System.out.print("리뷰");
 				System.out.print(" | ");
 				System.out.print("작성자 번호");
 				System.out.print(" | ");
@@ -106,18 +111,21 @@ public class CustomerReview {
 				System.out.print("\n-------------------------------");
 				
 				while(rs.next()) {
-					int no = rs.getInt("NO"); //리뷰 번호
-					String title = rs.getString("TITLE");//리뷰 제목
-					int writerNo = rs.getInt("WRITER_NO"); //작성자 회원 번호
-					Timestamp regDate = rs.getTimestamp("REGISTER_DATE");
+					int no = rs.getInt("REV_NO"); //리뷰 번호
+					int prdNo = rs.getInt("PRD_NO");
+					String score = rs.getString("SCORE");//리뷰 내용
+					int memNo = rs.getInt("MEM_NO"); //작성자 회원 번호
+					Timestamp revDate = rs.getTimestamp("REV_DATE");
 					
 					System.out.print(no);
 					System.out.print(" | ");
-					System.out.print(title);
+					System.out.print(prdNo);
 					System.out.print(" | ");
-					System.out.print(writerNo);
+					System.out.print(score);
 					System.out.print(" | ");
-					System.out.print(regDate);
+					System.out.print(memNo);
+					System.out.print(" | ");
+					System.out.print(revDate);
 					System.out.println();
 				}
 				
@@ -141,7 +149,7 @@ public class CustomerReview {
 			
 			Connection conn = OracleDB.getOracleConnection();
 			
-			String sql = "SELECT * FROM REVIEW WHERE NO = ? AND DELETE_YN ='N'";
+			String sql = "SELECT * FROM REVIEW WHERE REV_NO = ? AND REV_DELETE ='N'";
 			
 			try {
 				PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -151,11 +159,13 @@ public class CustomerReview {
 				ResultSet rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
-					String title = rs.getString("TITLE");
-					String content = rs.getString("CONTENT");
+					int revno = rs.getInt("REV_NO");
+					int prdNo = rs.getInt("PRD_NO");
+					String inpress = rs.getString("IMPRESSION");
 					
-					System.out.println("제목 : " + title);
-					System.out.println("내용 : " + content);
+					System.out.println("리뷰 번호 : " + revno);
+					System.out.println("상품 번호 : " + prdNo);
+					System.out.println("리뷰 : " + inpress);
 					
 				}
 				
