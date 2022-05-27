@@ -10,8 +10,8 @@ import member.Member;
 import oracleDB.OracleDB;
 import util.MyUtil;
 
-public class Question {
-
+public class Question{
+	
 	public void write() {
 		if(Member.loginUserNo == 0) {
 			System.out.println("로그인 한 유저만 글을 쓸 수 있습니다.");
@@ -25,7 +25,7 @@ public class Question {
 		
 		Connection conn = OracleDB.getOracleConnection();
 		
-		String sql = "INSERT INTO BOARD(QES_NO, MEM_NO, QES_TITLE, QES_CONTENTS)"
+		String sql = "INSERT INTO QUESTION(QES_NO, MEM_NO, QES_TITLE, QES_CONTENTS)"
 				+ "VALUES(QUESTION_NO_SEQ.NEXTVAL,?, ?, ?)";
 		PreparedStatement pstmt = null;
 		try {
@@ -51,7 +51,7 @@ public class Question {
 	public void showList() {
 		System.out.println("====게시글 목록조회====");
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT * FROM QUESTION WHERE DELETE_YN = 'N' ORDER BY QES_DATE ASC";
+		String sql = "SELECT * FROM QUESTION ORDER BY QES_DATE ASC";
 		ResultSet rs = null;
 	
 		System.out.print("글번호");

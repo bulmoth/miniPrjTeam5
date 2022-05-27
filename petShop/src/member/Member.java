@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import oracleDB.OracleDB;
-import util.MyUtil;
+import util.MyUtil;	
 
 public class Member {
-	
-	public static int loginUserNo;	
+
+public static int loginUserNo;	
 	
 	public boolean login() {
 		System.out.println("========로그인 하기==========");
@@ -22,7 +22,7 @@ public class Member {
 		
 		Connection conn =  OracleDB.getOracleConnection();
 		//해당 아이디에 맞는 패스워드 조회하기(DB)
-		String sql = "SELECT MEM_NO, PWD FROM MEMBER WHERE ID = ?"; //패스워드를 조회하는데 id가 ? 인 친구의 pwd를 조회
+		String sql = "SELECT MEM_NO, MEM_PWD FROM MEMBER WHERE MEM_ID = ?"; //패스워드를 조회하는데 id가 ? 인 친구의 pwd를 조회
 		//String sql = "SELECT PWD FROM MEMBER WHERE UPPER(ID) = UPPER(?)"; 대소문자 구분없이
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -32,7 +32,7 @@ public class Member {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				String dbPwd = rs.getString("PWD"); // 첫번째 칼럼의 행을 조회 
+				String dbPwd = rs.getString("MEM_PWD"); // 첫번째 칼럼의 행을 조회 
 				int no = rs.getInt("MEM_NO");
 				if(dbPwd.equalsIgnoreCase(pwd)) {
 					//로그인 성공
@@ -56,7 +56,7 @@ public class Member {
 	}
 	
 	
-	public boolean join() {
+	public void join() {
 		
 		
 		System.out.println("======회원가입 하기======");
@@ -80,16 +80,16 @@ public class Member {
 		ResultSet rs = null;
 		PreparedStatement pstmt2 = null;
 		try {
-					String sql = "SELECT * FROM MEMBER WHERE ID = ?";
+					String sql = "SELECT * FROM MEMBER WHERE MEM_ID = ?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, id);
 					rs = pstmt.executeQuery();
 					if(rs.next()) {
 						System.out.println("아이디 중복!!!");
-						return false;
+						return ;
 					}
 					String sqlInsert = "INSERT INTO MEMBER(MEM_NO,MEM_ID,MEM_PWD, NAME, BIRTH, PHONE, ADDRESS) "
-							+ "VALUES(MEMBER_NO_SEQ.NEXTVAL,?,?,?,?,TO_DATE(?),?)";
+							+ "VALUES(MEMBER_NO_SEQ.NEXTVAL,?,?,?,TO_DATE(?),?,?)";
 					pstmt2 = conn.prepareStatement(sqlInsert);
 					pstmt2.setString(1, id);
 					pstmt2.setString(2, pwd);
@@ -101,7 +101,8 @@ public class Member {
 					int result = pstmt2.executeUpdate();
 					if(result == 1) {
 						System.out.println("회원가입 성공!!!");
-						return true;
+					}else {
+						System.out.println("회원가입 실패!!!");
 					}
 					
 		} catch (SQLException e) {
@@ -112,8 +113,7 @@ public class Member {
 					OracleDB.close(pstmt2);
 					OracleDB.close(rs);
 		}
-		System.out.println("회원가입 실패!!");
-		return false;
+		
 	}
 	
 	
