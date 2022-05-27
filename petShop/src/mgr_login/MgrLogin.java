@@ -190,7 +190,39 @@ public class MgrLogin {
 	private void todayMem() {
 		//오늘의 회원 변동 조회
 		System.out.println("===== 오늘의 회원 변동 사항 =====");
+		int enrollMem = 0;
+		int withdrawMem = 0;
 		
+		//연결 얻기
+		Connection conn = OracleDB.getOracleConnection();
+		String sql = "SELECT ENROLL_DATE, QUIT_YN FROM MEMBER WHERE TO_CHAR(ENROLL_DATE)=TO_CHAR(SYSDATE) AND QUIT_YN = 'N'";
+		String sql2 = "SELECT ENROLL_DATE, QUIT_YN FROM MEMBER WHERE TO_CHAR(ENROLL_DATE)=TO_CHAR(SYSDATE) AND QUIT_YN = 'Y'";
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				enrollMem++;
+			}
+			pstmt2 = conn.prepareStatement(sql2);
+			rs2 = pstmt2.executeQuery();
+			while(rs2.next()) {
+				withdrawMem++;
+			}
+			System.out.println("오늘 가입한 회원 : " + enrollMem);
+			System.out.println("오늘 탈퇴한 회원 : " + withdrawMem);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			OracleDB.close(conn);
+			OracleDB.close(pstmt);
+			OracleDB.close(rs);
+			OracleDB.close(pstmt2);
+			OracleDB.close(rs2);
+		}
 		
 	}
 
