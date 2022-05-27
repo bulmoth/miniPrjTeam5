@@ -15,8 +15,8 @@ public class CustomerReview {
 	
 	private int selectNum;
 	
-	//리뷰작성
-	//게시글 작성
+		//리뷰작성
+		//게시글 작성
 		public void ReviewMain() {
 			
 			
@@ -57,8 +57,7 @@ public class CustomerReview {
 			System.out.print("내용 : ");
 			String content = MyUtil.sc.nextLine();
 			
-			
-			
+
 			//연결 얻기
 			Connection conn = OracleDB.getOracleConnection();
 			//INSERT
@@ -82,7 +81,7 @@ public class CustomerReview {
 				OracleDB.close(conn);
 				OracleDB.close(pstmt);
 			}
-		}
+		}//write
 
 		//리뷰 목록 조회
 		public void showList() {
@@ -104,7 +103,7 @@ public class CustomerReview {
 				System.out.print("작성자 번호");
 				System.out.print(" | ");
 				System.out.print("리뷰 작성일");
-				System.out.println("\n-------------------------------");
+				System.out.print("\n-------------------------------");
 				
 				while(rs.next()) {
 					int no = rs.getInt("NO"); //리뷰 번호
@@ -128,7 +127,7 @@ public class CustomerReview {
 				
 			}//반납
 			
-			//게시판 상세보기 호출
+			//리뷰 상세보기 호출
 			showReviewDetail();
 			
 		}//showList
@@ -165,6 +164,6 @@ public class CustomerReview {
 			} finally {
 				//반납
 			}
-		}
+		}//showReviewDetail
 
 }
