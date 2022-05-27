@@ -6,17 +6,45 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import mgr_login.Mgr_login;
+import member.Member;
 import oracleDB.OracleDB;
 import util.MyUtil;
 
 public class CustomerReview {
 	
+	
+	private int selectNum;
+	
 	//리뷰작성
 	//게시글 작성
+		public void ReviewMain() {
+			
+			
+			System.out.println("리뷰 페이지 입니다");
+			System.out.println();
+			System.out.println("----------------------------");
+			System.out.println("1. 리뷰 작성");
+			System.out.println("2. 리뷰 목록 조회");
+			System.out.println("3. 리뷰 상세 조회");
+			System.out.println("----------------------------");
+			
+			selectNum = MyUtil.sc.nextInt();
+			
+			switch(selectNum) {
+			case 0 : 
+				new CustomerReview().write(); break; // 리뷰 작성
+			case 1 : 
+				new CustomerReview().showList(); break; // 리뷰 목록 조회
+			case 2 : 
+				new CustomerReview().showReviewDetail(); break; // 리뷰 상세 조회
+			
+			default : System.out.println("선택하신 메뉴는 유효하지 않습니다."); ReviewMain();
+			}
+			
+		}
 		public void write() {
 			//작성자 == 로그인한 유저
-			if(Mgr_login.로그인회원고유번호 == 0) {
+			if(Member.loginUserNo == 0) {
 				System.out.println("로그인 한 유저만 글을 쓸 수 있습니다.");
 				return;
 			}
@@ -41,12 +69,12 @@ public class CustomerReview {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, title);
 				pstmt.setString(2, content);
-				pstmt.setInt(3, Mgr_login.로그인회원고유번호);
+				pstmt.setInt(3, Member.loginUserNo);
 				int  result = pstmt.executeUpdate();
 				if(result == 1) {
-					System.out.println("게시글 등록 성공 !");
+					System.out.println("리뷰 등록 성공 !");
 				}else {
-					System.out.println("게시글 등록 실패 ..");
+					System.out.println("리뷰 등록 실패 ..");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -101,12 +129,12 @@ public class CustomerReview {
 			}//반납
 			
 			//게시판 상세보기 호출
-			showBoardDetail();
+			showReviewDetail();
 			
 		}//showList
 		
 		//리뷰 상세 조회
-		public void showBoardDetail() {
+		public void showReviewDetail() {
 			
 		
 			System.out.print("조회할 게시글 번호 입력 : ");

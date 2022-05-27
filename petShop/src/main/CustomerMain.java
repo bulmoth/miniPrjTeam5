@@ -42,7 +42,7 @@ public class CustomerMain {
 		case 4 : 
 			break; //장바구니
 		case 5 : 
-			break; // 리뷰 작성
+			new CustomerReview().ReviewMain(); break; // 리뷰 페이지
 		case 6 : 
 			break; //입양
 		case 7 : 
