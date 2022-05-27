@@ -65,6 +65,7 @@ public class MgrLogin {
 			default: System.out.println("상위 메뉴로 돌아갑니다."); isCorrect = false;
 			}
 		}
+		//1과 2 이외의 것이 선택되었을 때 while 문 탈출 및 리턴
 		return;
 	}//memberMng
 	
@@ -188,6 +189,8 @@ public class MgrLogin {
 	
 	private void todayMem() {
 		//오늘의 회원 변동 조회
+		System.out.println("===== 오늘의 회원 변동 사항 =====");
+		
 		
 	}
 
