@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import oracleDB.OracleDB;
 import util.MyUtil;
 
@@ -16,7 +17,10 @@ public class A_0_product {
 	private ResultSet rs = null;
 	private Connection conn = null;
 	
+	
 	public void itemMenu() {
+		
+		
 		System.out.println("─────────────────────────────────");
 		System.out.println(); 
 		System.out.println("        상품등록 및 삭제");
@@ -116,26 +120,31 @@ public class A_0_product {
 
 	
 	//상품 등록
-	    public void addItem() {
+	    private void addItem() {
 
 	    	conn = OracleDB.getOracleConnection();
 	    	
-	    	while(true) {
-    	    	System.out.printf("카테고리번호\n(1. 개사료, 2.고양이사료 3.개간식, 4.고양이간식 5. 장난감, 6.기타 숫자만 입력) : ");
-    	    	int cat_no = MyUtil.sc.nextInt();
-    	    	System.out.print("상품번호 : ");
-    	    	int prd_no = MyUtil.sc.nextInt();
-    	    	MyUtil.sc.nextLine(); //엔터키 처리
-    	    	System.out.print("상품이름 : ");
-    	    	String prd_name = MyUtil.sc.nextLine();
-    	    	System.out.print("상품설명 : ");
-    	    	String description = MyUtil.sc.nextLine();
-    	    	System.out.print("가격 : ");
-    	    	int price = MyUtil.sc.nextInt();
-    	    	System.out.print("재고 : ");
-    	    	int stock = MyUtil.sc.nextInt();
+	    	
 	    	
 	    	   try {
+	    		   
+	    		   while(true) {
+	       	    	System.out.printf("카테고리번호\n(1. 개사료, 2.고양이사료 3.개간식, 4.고양이간식 5. 장난감, 6.기타 숫자만 입력) : ");
+	       	    	int cat_no = MyUtil.sc.nextInt();
+	       	    	System.out.print("상품번호 : ");
+	       	    	int prd_no = MyUtil.sc.nextInt();
+	       	    	MyUtil.sc.nextLine(); //엔터키 처리
+	       	    	System.out.print("상품이름 : ");
+	       	    	String prd_name = MyUtil.sc.nextLine();
+	       	    	System.out.print("상품설명 : ");
+	       	    	String description = MyUtil.sc.nextLine();
+	       	    	System.out.print("가격 : ");
+	       	    	int price = MyUtil.sc.nextInt();
+	       	    	System.out.print("재고 : ");
+	       	    	int stock = MyUtil.sc.nextInt();
+	       	    	
+	       	    	
+	       	    	
 		    		String sql = "SELECT * FROM PRODUCT WHERE PRD_NO = ?";
 		    		pstmt = conn.prepareStatement(sql);
 		        	pstmt.setInt(1, prd_no);
@@ -163,9 +172,13 @@ public class A_0_product {
 	           	 System.out.println("정상적으로 상품을 등록하였습니다");
 	           	 break;
 	            }
+	    		   }
 
 	    	}catch(SQLException e) {
 	    		System.out.println("상품 등록 중 문제 발생!");
+	    	}catch(InputMismatchException e) {
+	    		MyUtil.sc.nextLine();
+		    	System.out.println("상품 등록 중 문제 발생! 양식을 확인해주세요");
 	    		
 	    	}finally {
 				OracleDB.close(conn);
@@ -173,7 +186,7 @@ public class A_0_product {
 				OracleDB.close(rs); 
 				}
 
-	    	}
+	    	
 	    	
 	    	System.out.println("상품 등록 및 삭제 메뉴로 돌아갑니다");
 	    	itemMenu();
@@ -182,7 +195,7 @@ public class A_0_product {
 	    }
 	    
 	//상품 삭제
-		public void deleteItem() {
+	    private void deleteItem() {
 			conn = OracleDB.getOracleConnection();
 			
     		
@@ -202,10 +215,14 @@ public class A_0_product {
 		           	 System.out.println("정상적으로 상품을 삭제하였습니다");
 	        	}else {
 	        		System.out.println("상품을 삭제하지 못했습니다. 상품번호를 다시 확인해주세요");
+	        		
 	        	}
 
 	        	}catch (SQLException e){
 	        		System.out.println("상품 삭제 중 문제 발생!");
+	        	}catch(InputMismatchException e) {
+		    		MyUtil.sc.nextLine();
+			    	System.out.println("상품 삭제 중 문제 발생! 양식을 확인해주세요");
 	        	}finally {
 	    			OracleDB.close(conn);
 	    			OracleDB.close(pstmt);
@@ -218,7 +235,7 @@ public class A_0_product {
 		
 	}
 		//상품 재고 추가
-		public void addStock() {
+	    private void addStock() {
 			conn = OracleDB.getOracleConnection();
 			
 			try {
@@ -260,6 +277,11 @@ public class A_0_product {
 			
 	        	}catch (SQLException e){
 	        		System.out.println("재고 추가 중 문제 발생!");
+	        		
+	        	}catch(InputMismatchException e) {
+		    		MyUtil.sc.nextLine();
+			    	System.out.println("재고 추가 중 문제 발생! 양식을 확인해주세요");
+	        	
 	        	}finally {
 	    			OracleDB.close(conn);
 	    			OracleDB.close(pstmt);
@@ -275,7 +297,7 @@ public class A_0_product {
 		
 		public void cancelItem() {
 			System.out.println("      관리자 메뉴로 돌아갑니다");
-			return;
+			new AdminMain().adminMain();
 		}
 	
 		
