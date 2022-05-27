@@ -157,10 +157,10 @@ public class Question{
 		try {
 			String sql = "SELECT * FROM QUESTION "
 					+ "WHERE MEM_NO = ? "
-					+ "AND DELETE_YN = 'N' ORDER BY QES_DATE ASC";
+					+ "ORDER BY QES_DATE ASC";
 			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
 			pstmt.setInt(1, Member.loginUserNo);
+			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				int no = rs.getInt("QES_NO");
 				String title = rs.getString("QES_TITLE");
