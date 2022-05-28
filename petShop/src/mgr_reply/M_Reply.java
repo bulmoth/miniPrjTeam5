@@ -7,12 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import oracleDB.OracleDB;
+import productAddDelete.AdminMain;
 import util.MyUtil;
 
 
 public class M_Reply {
 	
-	static int ManagerLoginNo = 1; // 수정
 	static int QuestionNo;
 	static int repNo;
 //	======================================================================
@@ -53,12 +53,7 @@ public class M_Reply {
 			
 			System.out.println("===== 답글 목록 조회 =====");
 			
-			//관리자만 답글 목록 확인가능
-			if(ManagerLoginNo == 0 ) {
-					System.out.println("답글 목록 확인을 위해서 관리자로 로그인해 주세요.");
-					return;
-			}
-			
+						
 			//연결얻기
 			Connection conn = OracleDB.getOracleConnection();
 			
@@ -119,14 +114,7 @@ public class M_Reply {
 			
 			//글 작성자는 관리자로 로그인된 사람만 작성 가능
 			
-			//매니저 로그인 번호로 매니저인지 확인 - loginManagerNo 저장하는 static 변수 필요
-			if(ManagerLoginNo == 0) {
-				System.out.println("관리자만 답글을 쓸 수 있습니다.");
-				return;
-			}
-			
-			
-			
+						
 			//안내 문구 출력 - 답글 입력하기
 			System.out.println("===== 답글 달기 ======");
 			
@@ -181,13 +169,7 @@ public class M_Reply {
 			
 			System.out.println("===== 답글 목록 조회 =====");
 			
-			//관리자만 답글 목록 확인가능
-			if(ManagerLoginNo == 0 ) {
-					System.out.println("관리자만 답글 목록을 볼 수 있습니다.");
-					return;
-			}	
-			
-					
+								
 			Connection conn = OracleDB.getOracleConnection();
 			
 			String sql = "SELECT * FROM MGR_REPLY WHERE REP_DELETE_YN = 'N' ORDER BY REP_DATE DESC";
@@ -230,7 +212,8 @@ public class M_Reply {
 						
 		}//showReply
 		
-	
+
+		 	
 }//class
 
 		
