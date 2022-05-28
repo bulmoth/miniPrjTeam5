@@ -19,14 +19,26 @@ public class CustomerShop {
 		//장바구니 메소드
 		int selectNo = 0;
 		while(selectNo != -1) {//-1을 받으면 while문 탈출, 상위 메뉴로 이동
-			//상품조회
-			Shop();
-			//선택
 			selectNo = MyUtil.scInt();
 			//상품 일치여부 확인
 			if(IsSame(selectNo)) {
 				//장바구니에 담기
 				Cartupdate(selectNo);
+				System.out.println("장바구니로 이동하시겠습니까? 1. 장바구니 이동 || 2.쇼핑을 계속한다.");
+				selectNo = MyUtil.scInt();
+				if (selectNo==1) {
+					System.out.println("장바구니로 이동합니다.");
+					System.out.println();
+					//장바구니 메소드
+				}else if (selectNo==2) {
+					System.out.println("상품 선택 페이지로 돌아갑니다.");
+					System.out.println();
+					Shop();
+				}else {
+					System.out.println("숫자를 제대로 선택해주세요. 상품 선택으로 돌아갑니다.");
+					System.out.println();
+					Shop();
+				}
 			}
 		}
 		return;
@@ -56,13 +68,14 @@ public class CustomerShop {
 		
 		return false;
 	}
-	
+	//오류나는 메소드
 	private void Cartupdate(int selectNo) {
 		
 		//장바구니 업데이트
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRODUCT(CART_NO, MEM_NO, PRD_NO, PRICE, COUNT)"
-				+"INSERT CART(CART_NO, MEM_NO, PRD_NO, PRICE, COUNT) VALUES ('시퀀스', '회원 번호', selectNo, '가격', '수량')";
+		String sql = "INSERT INTO CART(CART_NO, MEM_NO, PRD_NO, PRICE, COUNT)"
+			+ "VALUES ('시퀀스', '회원 번호', selectNo, '가격', '수량')";
+			
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -164,14 +177,17 @@ public class CustomerShop {
 				System.out.print(stock);
 				System.out.println();
 				
+				
 
 			}
-
+			GoToCart();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			GoToCart();
+			
 		}
+		
+		
 
 	}//Dogfood
 	
