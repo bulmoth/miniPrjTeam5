@@ -13,7 +13,7 @@ import util.MyUtil;
 public class Question{
 	
 	public void write() {
-		if(Member.loginUserNo == 0) {
+		if(Member.LOGIN_USER_NO == 0) {
 			System.out.println("로그인 한 유저만 글을 쓸 수 있습니다.");
 			return;
 		} 
@@ -30,7 +30,7 @@ public class Question{
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, Member.loginUserNo);
+			pstmt.setInt(1, Member.LOGIN_USER_NO);
 			pstmt.setString(2, title);
 			pstmt.setString(3, content);
 			int result = pstmt.executeUpdate();
@@ -130,7 +130,7 @@ public class Question{
 	
 	public void writeUpdate() {
 		//수정자 == 로그인한 유저
-		if(Member.loginUserNo == 0) {
+		if(Member.LOGIN_USER_NO == 0) {
 			System.out.println("로그인 한 유저만 글을 수정할 수 있습니다.");
 			return;
 		} 
@@ -159,7 +159,7 @@ public class Question{
 					+ "WHERE MEM_NO = ? "
 					+ "ORDER BY QES_DATE ASC";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, Member.loginUserNo);
+			pstmt.setInt(1, Member.LOGIN_USER_NO);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				int no = rs.getInt("QES_NO");
