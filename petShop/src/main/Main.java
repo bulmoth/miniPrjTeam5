@@ -1,5 +1,6 @@
 package main;
 
+import productAddDelete.AdminMain;
 import util.MyUtil;
 
 public class Main {
@@ -24,7 +25,7 @@ public class Main {
 		case 1 : 
 			new CustomerMain().CustomMain(); break; //구매자 --구매자 메인 페이지로 이동
 		case 2 : 
-			break;// 관리자
+			new AdminMain().adminMain(); break;// 관리자
 		default : System.out.println("선택하신 계정은 유효하지 않습니다.");
 		}
 		
