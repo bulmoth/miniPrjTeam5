@@ -10,6 +10,8 @@ import util.MyUtil;
 
 public class MgrLogin {
 	
+	public static String mgrIdNow;
+	
 	public boolean mgrLogin() {
 		
 		System.out.println("===== 관리자 로그인 =====");
@@ -33,6 +35,7 @@ public class MgrLogin {
 			String dbPwd = rs.getString("ADM_PWD");
 			if(pwd.equals(dbPwd)) {
 				System.out.println("관리자 ID " + id + " 로그인 되었습니다.");
+				mgrIdNow = id;
 				return true;
 			}
 		} catch (SQLException e) {
