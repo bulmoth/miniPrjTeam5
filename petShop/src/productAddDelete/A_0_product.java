@@ -36,7 +36,7 @@ public class A_0_product {
 		
 		
 		
-		selectNum = MyUtil.sc.nextInt();
+		selectNum = MyUtil.scInt();
 		
 		switch(selectNum) {
 		case 0 : //상품현황 
@@ -98,7 +98,7 @@ public class A_0_product {
 			
 			
 			
-			MyUtil.sc.nextLine(); //엔터키 처리
+		
 		} catch (SQLException e) { 
 			System.out.println("상품 조회 중 문제가 발생하였습니다.");
 		}finally {
@@ -130,18 +130,17 @@ public class A_0_product {
 	    		   
 	    		   while(true) {
 	       	    	System.out.printf("카테고리번호\n(1. 개사료, 2.고양이사료 3.개간식, 4.고양이간식 5. 장난감, 6.기타 숫자만 입력) : ");
-	       	    	int cat_no = MyUtil.sc.nextInt();
+	       	    	int cat_no = MyUtil.scInt();
 	       	    	System.out.print("상품번호 : ");
-	       	    	int prd_no = MyUtil.sc.nextInt();
-	       	    	MyUtil.sc.nextLine(); //엔터키 처리
+	       	    	int prd_no = MyUtil.scInt();
 	       	    	System.out.print("상품이름 : ");
 	       	    	String prd_name = MyUtil.sc.nextLine();
 	       	    	System.out.print("상품설명 : ");
 	       	    	String description = MyUtil.sc.nextLine();
 	       	    	System.out.print("가격 : ");
-	       	    	int price = MyUtil.sc.nextInt();
+	       	    	int price = MyUtil.scInt();
 	       	    	System.out.print("재고 : ");
-	       	    	int stock = MyUtil.sc.nextInt();
+	       	    	int stock = MyUtil.scInt();
 	       	    	
 	       	    	
 	       	    	
@@ -202,8 +201,8 @@ public class A_0_product {
     		try {
     			System.out.println("    삭제할 상품 번호를 입력하세요");
     			System.out.print("        상품 번호 : ");
-    			int prd_no = MyUtil.sc.nextInt();
-    			MyUtil.sc.nextLine(); //엔터키 제거
+    			int prd_no = MyUtil.scInt();
+    			
     			
     			String sqlDelete = "DELETE FROM PRODUCT WHERE PRD_NO = ?";
     			pstmt = conn.prepareStatement(sqlDelete);
@@ -217,6 +216,7 @@ public class A_0_product {
 	        		System.out.println("상품을 삭제하지 못했습니다. 상품번호를 다시 확인해주세요");
 	        		
 	        	}
+    		
 
 	        	}catch (SQLException e){
 	        		System.out.println("상품 삭제 중 문제 발생!");
@@ -239,10 +239,11 @@ public class A_0_product {
 			conn = OracleDB.getOracleConnection();
 			
 			try {
+				while(true) {
 				System.out.println("    재고 추가할 상품 번호를 입력하세요");
     			System.out.print("        상품 번호 : ");
-    			int prd_no = MyUtil.sc.nextInt();
-    			MyUtil.sc.nextLine(); //엔터키 제거
+    			int prd_no = MyUtil.scInt();
+    			
 			
     			//상품번호 있는지 확인
 				String sql = "SELECT * FROM PRODUCT WHERE PRD_NO = ?";
@@ -253,8 +254,8 @@ public class A_0_product {
 	        		//해당하는 상품번호 있을 시
     				System.out.println("    몇 개 추가하시겠습니까?");
         			System.out.print("        추가 수 : ");
-        			int stock = MyUtil.sc.nextInt();
-        		    MyUtil.sc.nextLine(); //엔터키 제거
+        			int stock = MyUtil.scInt();
+        		    
 	        		
         			String sqlUpdate = "UPDATE PRODUCT SET STOCK = STOCK + ? WHERE PRD_NO = ?";
         		    PreparedStatement pstmt2 = conn.prepareStatement(sqlUpdate);
@@ -265,16 +266,18 @@ public class A_0_product {
 	        		
     	        	if(updateResult == 1) {
     		           	 System.out.println("정상적으로 처리되었습니다");
-    		           	 
+    		           	 break;
     		            }else {
     		            	System.out.println("처리하는 중 문제가 발생했습니다.");
+    		            	break;
     		            }
 
 	        	}else { //상품번호가 없는 경우
 	            	System.out.println("해당하는 상품 번호가 없습니다. 상품번호를 다시 확인해주세요");
-	            	addStock();
+	            	continue;
 	         	}
-			
+	        	
+				}
 	        	}catch (SQLException e){
 	        		System.out.println("재고 추가 중 문제 발생!");
 	        		
@@ -297,7 +300,7 @@ public class A_0_product {
 		
 		public void cancelItem() {
 			System.out.println("      관리자 메뉴로 돌아갑니다");
-			new AdminMain().adminMain();
+			return;
 		}
 	
 		
