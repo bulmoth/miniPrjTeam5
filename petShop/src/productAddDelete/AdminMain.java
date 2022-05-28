@@ -28,7 +28,7 @@ public class AdminMain {
 		System.out.println();
 		System.out.println("      [1] 회원 관리");
 		System.out.println("      [2] 상품 등록 및 삭제");
-		System.out.println("      [3] 주문서 조회");
+		System.out.println("      [3] 오늘 매출 확인");
 		System.out.println("      [4] 입양 관리");
 		System.out.println("      [5] 리뷰 관리");
 		System.out.println("      [6] 고객센터 게시글 관리");
@@ -49,8 +49,8 @@ public class AdminMain {
 		case 2 : //상품 등록 및 삭제
 			new A_0_product().itemMenu();
 			break;
-		case 3 : //주문서 조회***
-			
+		case 3 : //오늘 매출 확인
+			//new CheckOrderList.check();
 			break;
 		case 4 : //입양 관리
 			new AdoptReg().adoptReg();
@@ -68,6 +68,11 @@ public class AdminMain {
 		}
 		
 		}
+		//로그인 정보가 없으면 
+		if(!mLogin) {
+			System.out.println("로그인 정보가 없습니다. 프로그램을 종료합니다.");
+		}
+		
 	}
 	
 	
