@@ -43,6 +43,7 @@ public class CustomerShop {
 				}
 			}
 		}
+		Shop();
 		return;
 	}
 	
