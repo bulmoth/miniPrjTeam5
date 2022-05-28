@@ -1,5 +1,6 @@
 package main;
 
+import cart.Cart;
 import util.MyUtil;
 
 public class CustomerMain {
@@ -40,7 +41,7 @@ public class CustomerMain {
 		case 4 : 
 			break; //배송 조회
 		case 5 : 
-			break; //장바구니
+			new Cart().cartShow(); break; //장바구니
 		case 6 : 
 			new CustomerReview().ReviewMain(); break; // 리뷰 페이지
 		case 7 : 
