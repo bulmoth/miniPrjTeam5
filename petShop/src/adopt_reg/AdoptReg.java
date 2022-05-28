@@ -50,8 +50,8 @@ public class AdoptReg {
 		//입양 대기 목록 조회
 		System.out.println("===== 현재 등록된 입양 대기 목록 =====");
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT RPAD(TO_CHAR(ADT_NO), 6, ' ') ADT_NO, LPAD(MEM_ID, 21, ' ') MEM_ID, "
-				+ "LPAD(TYPE, 5, ' ') TYPE, LPAD(ANI_NAME, 25, ' ') ANI_NAME "
+		String sql = "SELECT ADT_NO, LPAD(MEM_ID, 25, ' ') MEM_ID, "
+				+ "LPAD(TYPE, 5, '  ') TYPE, LPAD(ANI_NAME, 25, ' ') ANI_NAME "
 				+ "FROM ADOPT WHERE ADOPT = 'N' ORDER BY ADT_NO ASC";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -61,10 +61,10 @@ public class AdoptReg {
 			System.out.println("입양번호 |        아이디        |  종  |          동물 이름         ");
 			while(rs.next()) {
 				String adt_no = rs.getString("ADT_NO");
-				String mem_no = rs.getString("MEM_ID");
+				String mem_id = rs.getString("MEM_ID");
 				String type = rs.getString("TYPE");
 				String ani_name = rs.getString("ANI_NAME");
-				System.out.println(adt_no + mem_no + type + ani_name);
+				System.out.println(adt_no + mem_id + "    "  + type + ani_name);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -94,7 +94,7 @@ public class AdoptReg {
 				String adm_id = rs.getString("ADM_ID");
 				String type = rs.getString("TYPE");
 				String ani_name = rs.getString("ANI_NAME");
-				System.out.println(adt_no + adm_id + type + ani_name);
+				System.out.println(adt_no + adm_id + "   "  + type + ani_name);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -115,13 +115,13 @@ public class AdoptReg {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			System.out.println("입양 등록을 시작합니다.");
-			System.out.print("동물 종을 입력하세요(개 : D|고양이 : C|그 외 : 공란) : ");
-			String type = MyUtil.sc.nextLine();
-			pstmt.setString(2, MgrLogin.mgrIdNow);
-			pstmt.setString(1, type);
 			System.out.print("동물 이름을 입력하세요 : ");
 			String ani_name = MyUtil.sc.nextLine();
+			pstmt.setString(1, MgrLogin.mgrIdNow);
 			pstmt.setString(3, ani_name);
+			System.out.print("동물 종을 입력하세요(개 : D|고양이 : C|그 외 : 공란) : ");
+			String type = MyUtil.sc.nextLine();
+			pstmt.setString(2, type);
 			int result = pstmt.executeUpdate();
 			if(result == 1) {
 				System.out.println("등록을 성공적으로 마쳤습니다.");
