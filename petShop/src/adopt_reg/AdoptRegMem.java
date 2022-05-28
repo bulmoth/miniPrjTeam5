@@ -29,18 +29,15 @@ public class AdoptRegMem {
 			System.out.println("입양 관련 페이지 입니다.");
 			System.out.println("원하시는 기능을 선택하십시오.");
 			System.out.println();
-			System.out.println("1. 입양 대기 목록 조회");
-			System.out.println("2. 입양 신청");
-			System.out.println("3. 입양 등록");
+			System.out.println("1. 입양 대기 목록 조회 및 입양 신청");
+			System.out.println("2. 입양 등록");
 			System.out.println("그 외 : 나가기");
 			
 			int select = MyUtil.scInt();
 			switch(select) {
 			case 1:
 				adoptList(); break;
-			case 2:
-				request(); break;
-			case 3: 
+			case 2: 
 				register(); break;
 				default : System.out.println("상위 메뉴로 돌아갑니다."); isQuit = true;
 			}
@@ -80,13 +77,53 @@ public class AdoptRegMem {
 			OracleDB.close(pstmt);
 		}
 				
-		
+		request();
 	}//adoptList
 
 	private void request() {
 		
-		
-				
+		//회원 입양 신청
+		System.out.println("========== 입양 신청 ==========");
+		String mem_id = null;
+		System.out.print("입양하실 동물의 입양번호를 입력해주세요 (없는 번호 : 나가기) : ");
+		int adt_no = MyUtil.scInt();
+		Connection conn = OracleDB.getOracleConnection();
+		String sql = "UPDATE ADOPT SET ADM_ID = ?, ADOPT = 'Y' WHERE ADT_NO = ?";
+		String sql2 = "SELECT MEM_NO, MEM_ID FROM MEMBER WHERE MEM_NO = ?";
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt2 = conn.prepareStatement(sql2);
+			pstmt2.setInt(1, Member.loginUserNo);
+			rs = pstmt2.executeQuery();
+			if(rs.next()) {
+				mem_id = rs.getString("MEM_ID");
+			}else {
+				System.out.println("로그인 정보를 불러올 수 없습니다.");
+				return;
+			}
+			pstmt.setString(1, mem_id);
+			pstmt.setInt(2, adt_no);
+			int result = pstmt.executeUpdate();
+			if(result == 1) {
+				System.out.println("입양이 성공적으로 이루어졌습니다.");
+				System.out.println("상위 메뉴로 돌아갑니다.");
+				return;
+			}else {
+				System.out.println("입양 처리에 실패하였습니다.");
+				System.out.println("상위 메뉴로 돌아갑니다.");
+				return;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			OracleDB.close(conn);
+			OracleDB.close(pstmt);
+			OracleDB.close(pstmt2);
+			OracleDB.close(rs);
+		}
 		
 	}//request
 
