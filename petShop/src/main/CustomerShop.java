@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import cart.Cart;
 import oracleDB.OracleDB;
 import util.MyUtil;
 
@@ -18,6 +19,7 @@ public class CustomerShop {
 		
 		//장바구니 메소드
 		int selectNo = 0;
+		
 		while(selectNo != -1) {//-1을 받으면 while문 탈출, 상위 메뉴로 이동
 			selectNo = MyUtil.scInt();
 			//상품 일치여부 확인
@@ -29,7 +31,7 @@ public class CustomerShop {
 				if (selectNo==1) {
 					System.out.println("장바구니로 이동합니다.");
 					System.out.println();
-					//장바구니 메소드 추가
+					new Cart().cartShow(); //장바구니로 이동
 				}else if (selectNo==2) {
 					System.out.println("상품 선택 페이지로 돌아갑니다.");
 					System.out.println();
@@ -68,13 +70,12 @@ public class CustomerShop {
 		
 		return false;
 	}
-	//오류나는 메소드
+	
 	private void Cartupdate(int selectNo) {
 		
 		//장바구니 업데이트
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "INSERT INTO CART(CART_NO, MEM_NO, PRD_NO, COUNT)"
-			+ "VALUES ('시퀀스', LOGIN_USER_NO, selectNo, selectNo)";
+		String sql = "INSERT INTO CART(CART_NO, MEM_NO, PRD_NO, COUNT) VALUES (CART_NO_SEQ, LOGIN_USER_NO, selectNo, selectNo)";
 			
 		PreparedStatement pstmt = null;
 		try {
@@ -87,11 +88,10 @@ public class CustomerShop {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			OracleDB.close(conn);
-			OracleDB.close(pstmt);
+//			OracleDB.close(conn);
+//			OracleDB.close(pstmt);
 		}
 		System.out.println("실패");
-		return;
 		
 	}
 	
@@ -107,6 +107,7 @@ public class CustomerShop {
 		System.out.println("4. 고양이 간식");
 		System.out.println("5. 장난감");
 		System.out.println("6. 기타");
+		System.out.println("7. 메인 페이지로 돌아가기");
 		System.out.println("----------------------");
 		
 		selectNum = MyUtil.sc.nextInt();
@@ -124,6 +125,8 @@ public class CustomerShop {
 			new CustomerShop().Toys(); break; //장난감
 		case 6 : 
 			new CustomerShop().Extra(); break; // 기타
+		case 7 : 
+			new CustomerMain().CustomMain(); break;
 			
 		default : System.out.println("선택하신 메뉴는 유효하지 않습니다."); Shop();
 		}
@@ -180,14 +183,14 @@ public class CustomerShop {
 				
 
 			}
-			GoToCart();
+			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			
 		}
-		
-		
+		GoToCart();
 
 	}//Dogfood
 	
