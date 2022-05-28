@@ -38,8 +38,8 @@ public class AdminMain {
 		System.out.println("     원하시는 메뉴를 선택해주세요");
 		System.out.print("       메뉴 : ");
 		
-		selectNum = MyUtil.sc.nextInt();
-		MyUtil.sc.nextLine(); //엔터키 처리
+		selectNum = MyUtil.scInt();
+		
 		
 		switch(selectNum) {
 		

@@ -32,7 +32,7 @@ public class M_review {
 				System.out.println("     원하시는 메뉴를 선택해주세요");
 				System.out.print("        메뉴 : ");
 					
-					selectNum = MyUtil.sc.nextInt();
+					selectNum = MyUtil.scInt();///
 					
 					switch(selectNum) {
 					case 0 : //리뷰조회
@@ -66,8 +66,8 @@ public class M_review {
 		System.out.println("─────────────────────────────────");
 		
 		System.out.print("        선택 : ");
-		int selectNum = MyUtil.sc.nextInt();
-		MyUtil.sc.nextLine(); //엔터키 처리
+		int selectNum = MyUtil.scInt();//
+		
 		
 		
 		switch(selectNum) {
@@ -106,8 +106,8 @@ public class M_review {
 			System.out.println("  삭제할 리뷰 게시글 번호를 입력해주세요");
 			System.out.print("        게시글 번호 :");
 			
-			int rev_no = MyUtil.sc.nextInt();
-			MyUtil.sc.nextLine(); //엔터키 처리
+			int rev_no = MyUtil.scInt();///
+			
 			
 			
 			//삭제지만 리뷰 삭제란만 N으로 바꿔주는 작업
@@ -199,7 +199,7 @@ public class M_review {
 		System.out.println();
 		System.out.println("─────────────────────────────────────");
 		System.out.println(); 
-		System.out.println("    리뷰 초기 메뉴로 : 아무키나 눌러주세요");
+		System.out.println("    초기 메뉴로 : 아무키나 눌러주세요");
 		System.out.println(); 
 		System.out.println("─────────────────────────────────────");
 		MyUtil.sc.nextLine();
