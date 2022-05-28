@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Scanner;
 
 import member.Member;
 import oracleDB.OracleDB;
@@ -14,6 +15,7 @@ public class CustomerReview {
 	
 	
 	private int selectNum;
+	
 	
 		//리뷰작성
 		//게시글 작성
@@ -43,8 +45,10 @@ public class CustomerReview {
 			
 		}
 		public void write() {
+			
+			
 			//작성자 == 로그인한 유저
-			if(Member.loginUserNo == 0) {
+			if(Member.LOGIN_USER_NO == 0) {
 				System.out.println("로그인 한 유저만 글을 쓸 수 있습니다.");
 				return;
 			}
@@ -52,12 +56,13 @@ public class CustomerReview {
 			//안내 문구 출력
 			//입력 받기 (제목, 내용)
 			System.out.println("===== 리뷰 작성 =====");
-			System.out.print("제목 : ");
-			String title = MyUtil.sc.nextLine();
+			System.out.print("상품 번호 : ");
+			int prdNo = MyUtil.scInt(); //쑸짜 ㅇㅋ , 옌터키 남음
 			System.out.print("내용 : ");
 			String content = MyUtil.sc.nextLine();
 			System.out.print("별점 : ");
-			int score = MyUtil.sc.nextInt();
+			int score = MyUtil.scInt();
+			
 			
 
 			//연결 얻기
@@ -68,10 +73,10 @@ public class CustomerReview {
 			PreparedStatement pstmt = null;
 			try {
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, title);
-				pstmt.setString(2, content);
-				pstmt.setInt(3, score);
-				pstmt.setInt(4, Member.loginUserNo);
+				pstmt.setInt(1, prdNo);
+				pstmt.setInt(2, Member.LOGIN_USER_NO);
+				pstmt.setString(3, content);
+				pstmt.setInt(4, score);
 				int  result = pstmt.executeUpdate();
 				if(result == 1) {
 					System.out.println("리뷰 등록 성공 !");
@@ -179,5 +184,28 @@ public class CustomerReview {
 				//반납
 			}
 		}//showReviewDetail
+		
+//		public int Delete() {
+//			
+//			Connection conn = null;
+//			PreparedStatement pstmt = null;
+//			String sql = null;
+//			int result = 0;
+//			
+//			try {
+//				conn = this.showList();
+//				conn.setAutoCommit(false);
+//			}
+//			
+//		
 
+			
+			
+			
+			
+			
+
+//			
+//			
+//		}
 }

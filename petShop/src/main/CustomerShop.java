@@ -29,7 +29,7 @@ public class CustomerShop {
 				if (selectNo==1) {
 					System.out.println("장바구니로 이동합니다.");
 					System.out.println();
-					//장바구니 메소드
+					//장바구니 메소드 추가
 				}else if (selectNo==2) {
 					System.out.println("상품 선택 페이지로 돌아갑니다.");
 					System.out.println();
@@ -73,8 +73,8 @@ public class CustomerShop {
 		
 		//장바구니 업데이트
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "INSERT INTO CART(CART_NO, MEM_NO, PRD_NO, PRICE, COUNT)"
-			+ "VALUES ('시퀀스', '회원 번호', selectNo, '가격', '수량')";
+		String sql = "INSERT INTO CART(CART_NO, MEM_NO, PRD_NO, COUNT)"
+			+ "VALUES ('시퀀스', LOGIN_USER_NO, selectNo, selectNo)";
 			
 		PreparedStatement pstmt = null;
 		try {
