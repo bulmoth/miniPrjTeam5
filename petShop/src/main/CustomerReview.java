@@ -132,6 +132,8 @@ public class CustomerReview {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}finally {
+				OracleDB.close(conn);
+				
 				
 			}//반납
 			
@@ -172,6 +174,8 @@ public class CustomerReview {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
+				OracleDB.close(conn);
+				
 				//반납
 			}
 		}//showReviewDetail

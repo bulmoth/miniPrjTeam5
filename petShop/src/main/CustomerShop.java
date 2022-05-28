@@ -13,6 +13,75 @@ public class CustomerShop {
 	
 	private int selectNum;
 	
+	
+	public void GoToCart() {
+		
+		//장바구니 메소드
+		int selectNo = 0;
+		while(selectNo != -1) {//-1을 받으면 while문 탈출, 상위 메뉴로 이동
+			//상품조회
+			Shop();
+			//선택
+			selectNo = MyUtil.scInt();
+			//상품 일치여부 확인
+			if(IsSame(selectNo)) {
+				//장바구니에 담기
+				Cartupdate(selectNo);
+			}
+		}
+		return;
+	}
+	
+	private boolean IsSame(int selectNo) {
+		
+		//상품 일치여부 확인
+		Connection conn = OracleDB.getOracleConnection();
+		String sql = "SELECT PRD_NO FROM PRODUCT WHERE PRD_NO = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, selectNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			OracleDB.close(conn);
+			OracleDB.close(pstmt);
+			OracleDB.close(rs);
+		}
+		
+		return false;
+	}
+	
+	private void Cartupdate(int selectNo) {
+		
+		//장바구니 업데이트
+		Connection conn = OracleDB.getOracleConnection();
+		String sql = "SELECT PRODUCT(CART_NO, MEM_NO, PRD_NO, PRICE, COUNT)"
+				+"INSERT CART(CART_NO, MEM_NO, PRD_NO, PRICE, COUNT) VALUES ('시퀀스', '회원 번호', selectNo, '가격', '수량')";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			int result = pstmt.executeUpdate();
+			if(result == 1) {
+				System.out.println("상품이 성공적으로 담겼습니다.");
+				return;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			OracleDB.close(conn);
+			OracleDB.close(pstmt);
+		}
+		System.out.println("실패");
+		return;
+		
+	}
+	
 	public void Shop() {
 		
 		//상품 구매
@@ -96,15 +165,12 @@ public class CustomerShop {
 				System.out.println();
 				
 
-				
-	
 			}
-			
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			
+			GoToCart();
 		}
 
 	}//Dogfood
@@ -113,7 +179,7 @@ public class CustomerShop {
 		System.out.println("=========고양이 사료 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 2 ORDER BY PRD_NO ASC";
+		String sql = "SELECT PRD_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 2 ORDER BY PRD_NO ASC";
 		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -167,7 +233,7 @@ public class CustomerShop {
 		System.out.println("=========개 간식 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 3 ORDER BY PRD_NO ASC";
+		String sql = "SELECT PRD_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 3 ORDER BY PRD_NO ASC";
 		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -206,6 +272,8 @@ public class CustomerShop {
 				System.out.println();
 			}
 			
+
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -218,7 +286,7 @@ public class CustomerShop {
 		System.out.println("=========고양이 간식 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 4 ORDER BY PRD_NO ASC";
+		String sql = "SELECT PRD_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 4 ORDER BY PRD_NO ASC";
 		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -269,7 +337,7 @@ public class CustomerShop {
 		System.out.println("=========장난감 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 5 ORDER BY PRD_NO ASC";
+		String sql = "SELECT PRD_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 5 ORDER BY PRD_NO ASC";
 		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -320,7 +388,7 @@ public class CustomerShop {
 		System.out.println("=========기타 상품 페이지입니다.=========");
 		
 		Connection conn = OracleDB.getOracleConnection();
-		String sql = "SELECT PRD_NO, CAT_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 6 ORDER BY PRD_NO ASC";
+		String sql = "SELECT PRD_NO, PRD_NAME, DESCRIPTION, PRICE, STOCK FROM PRODUCT WHERE CAT_NO = 6 ORDER BY PRD_NO ASC";
 		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -367,14 +435,7 @@ public class CustomerShop {
 		
 	}//Extra
 	
-	public void GotoCart() {
-		
-		selectNum = MyUtil.sc.nextInt();
-		
-		
-		
-	}
-	
+
 	
 
 }

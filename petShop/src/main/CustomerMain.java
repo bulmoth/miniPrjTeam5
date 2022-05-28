@@ -1,5 +1,7 @@
 package main;
 
+import member.Member;
+import question.Question;
 import util.MyUtil;
 
 public class CustomerMain {
@@ -9,7 +11,7 @@ public class CustomerMain {
 	public void CustomMain() {
 		
 		//메인페이지
-		
+		while(true) {
 		System.out.println("야옹아멍멍해 반려동물 관련 서비스 플랫폼입니다.");
 		System.out.println();
 		System.out.println("원하시는 서비스를 선택해주세요");
@@ -28,13 +30,13 @@ public class CustomerMain {
 		System.out.println();
 		System.out.println("---------------------");
 		
-		selectNum = MyUtil.sc.nextInt();
+		selectNum = MyUtil.scInt();
 		
 		switch(selectNum) {
 		case 1 : 
-			break; //회원가입
+			new Member().join(); break; //회원가입
 		case 2 : 
-			break; // 로그인
+			new Member().login();break; // 로그인
 		case 3 : 
 			new CustomerShop().Shop(); break; //상품구매
 		case 4 : 
@@ -44,15 +46,15 @@ public class CustomerMain {
 		case 6 : 
 			new CustomerReview().ReviewMain(); break; // 리뷰 페이지
 		case 7 : 
-			break; //입양
+			//new AdoptRegMem().adoptRegMem(); break; //입양
 		case 8 : 
 			break; //호텔 신청
 		case 9 : 
-			break; //고객센터 문의
+			new Question().write(); break; //고객센터 문의
 			
 		default : System.out.println("선택하신 메뉴는 유효하지 않습니다."); CustomMain();
 		}
-		
+	}
 
 	}
 
