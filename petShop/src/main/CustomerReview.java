@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Scanner;
 
 import member.Member;
 import oracleDB.OracleDB;
@@ -14,6 +15,7 @@ public class CustomerReview {
 	
 	
 	private int selectNum;
+	
 	
 		//리뷰작성
 		//게시글 작성
@@ -26,6 +28,8 @@ public class CustomerReview {
 			System.out.println("1. 리뷰 작성");
 			System.out.println("2. 리뷰 목록 조회");
 			System.out.println("3. 리뷰 상세 조회");
+			System.out.println("4. 리뷰 삭제");
+			System.out.println("5. 메인 페이지로 돌아가기");
 			System.out.println("----------------------------");
 			
 			selectNum = MyUtil.sc.nextInt();
@@ -37,14 +41,20 @@ public class CustomerReview {
 				new CustomerReview().showList(); break; // 리뷰 목록 조회
 			case 3 : 
 				new CustomerReview().showReviewDetail(); break; // 리뷰 상세 조회
+			case 4 : 
+				new CustomerReview().revDelete(); break; //리뷰삭제
+			case 5 : 
+				new CustomerMain().CustomMain(); break;
 			
 			default : System.out.println("선택하신 메뉴는 유효하지 않습니다."); ReviewMain();
 			}
 			
 		}
 		public void write() {
+			
+			
 			//작성자 == 로그인한 유저
-			if(Member.loginUserNo == 0) {
+			if(Member.LOGIN_USER_NO == 0) {
 				System.out.println("로그인 한 유저만 글을 쓸 수 있습니다.");
 				return;
 			}
@@ -52,12 +62,13 @@ public class CustomerReview {
 			//안내 문구 출력
 			//입력 받기 (제목, 내용)
 			System.out.println("===== 리뷰 작성 =====");
-			System.out.print("제목 : ");
-			String title = MyUtil.sc.nextLine();
+			System.out.print("상품 번호 : ");
+			int prdNo = MyUtil.scInt(); 
 			System.out.print("내용 : ");
 			String content = MyUtil.sc.nextLine();
 			System.out.print("별점 : ");
-			int score = MyUtil.sc.nextInt();
+			int score = MyUtil.scInt();
+			
 			
 
 			//연결 얻기
@@ -68,15 +79,19 @@ public class CustomerReview {
 			PreparedStatement pstmt = null;
 			try {
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, title);
-				pstmt.setString(2, content);
-				pstmt.setInt(3, score);
-				pstmt.setInt(4, Member.loginUserNo);
+				pstmt.setInt(1, prdNo);
+				pstmt.setInt(2, Member.LOGIN_USER_NO);
+				pstmt.setString(3, content);
+				pstmt.setInt(4, score);
 				int  result = pstmt.executeUpdate();
 				if(result == 1) {
 					System.out.println("리뷰 등록 성공 !");
+					System.out.println();
+					System.out.println("===============");
 				}else {
 					System.out.println("리뷰 등록 실패 ..");
+					System.out.println();
+					System.out.println("===============");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -84,6 +99,9 @@ public class CustomerReview {
 				OracleDB.close(conn);
 				OracleDB.close(pstmt);
 			}
+			
+			ReviewMain();
+			
 		}//write
 
 		//리뷰 목록 조회
@@ -138,7 +156,7 @@ public class CustomerReview {
 			}//반납
 			
 			//리뷰 상세보기 호출
-			showReviewDetail();
+			ReviewMain();
 			
 		}//showList
 		
@@ -178,6 +196,61 @@ public class CustomerReview {
 				
 				//반납
 			}
+			
+			ReviewMain();
+			
 		}//showReviewDetail
+		
+		
+		//리뷰 삭제
+		PreparedStatement pstmt = null;
+		
+		public void revDelete() {
+			
+			Connection conn = OracleDB.getOracleConnection();
+			
+			System.out.println("리뷰 삭제 페이지 입니다.");
+			System.out.println("삭제할 리뷰 넘버를 입력해 주세요");
+			
+			int revNo = MyUtil.scInt();
+			
+			String sql = "DELETE FROM REVIEW WHERE REV_NO = ?";
 
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, revNo);
+				int  result = pstmt.executeUpdate();
+				if(result == 1) {
+					System.out.println("리뷰 삭제 성공 !");
+					System.out.println();
+					System.out.println("===============");
+				}else {
+					System.out.println("리뷰 삭제 실패 ..");
+					System.out.println();
+					System.out.println("===============");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				
+				OracleDB.close(pstmt);
+			}
+			
+			ReviewMain();
+	
+		}
+			
+
+			
+		
+
+			
+			
+			
+			
+			
+
+//			
+//			
+//		}
 }
