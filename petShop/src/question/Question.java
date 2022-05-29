@@ -6,11 +6,44 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import main.CustomerMain;
+import main.CustomerReview;
 import member.Member;
 import oracleDB.OracleDB;
 import util.MyUtil;
 
 public class Question{
+	
+	private int selectNum;
+	
+	public void qMain() {
+		
+		while(true) {
+		System.out.println("문의 페이지 입니다");
+		System.out.println();
+		System.out.println("----------------------------");
+		System.out.println("1. 문의 작성");
+		System.out.println("2. 문의 목록 조회");
+		System.out.println("3. 문의 수정");
+		System.out.println("4. 메인 페이지로 돌아가기");
+		System.out.println("----------------------------");
+		
+		selectNum = MyUtil.sc.nextInt();
+		
+		switch(selectNum) {
+		case 1 : 
+			write(); break; // 리뷰 작성
+		case 2 : 
+			showList(); break; // 리뷰 목록 조회
+		case 3 : 
+			writeUpdate(); break; // 리뷰 상세 조회
+		case 4 : 
+			return; //메인페이지로 돌아가기
+		
+		default : System.out.println("선택하신 메뉴는 유효하지 않습니다."); new CustomerMain().CustomMain();
+		}
+		}
+	}
 	
 	public void write() {
 		if(Member.LOGIN_USER_NO == 0) {
