@@ -177,6 +177,7 @@ public class Question{
 			}
 				System.out.print("수정할 문의글 번호 선택 : ");	
 				int selectNo = MyUtil.scInt();
+				
 				System.out.println("수정할 제목 : ");
 				String reTitle = MyUtil.sc.nextLine();
 				System.out.println("수정할 내용 : ");

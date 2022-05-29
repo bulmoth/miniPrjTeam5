@@ -1,5 +1,7 @@
 package main;
 
+
+import adopt_reg.AdoptRegMem
 import cart.Cart;
 import member.Member;
 import question.Question;
@@ -47,7 +49,7 @@ public class CustomerMain {
 		case 6 : 
 			new CustomerReview().ReviewMain(); break; // 리뷰 페이지
 		case 7 : 
-			//new AdoptRegMem().adoptRegMem(); break; //입양
+			new AdoptRegMem().adoptRegMem(); break; //입양
 		case 8 : 
 			break; //호텔 신청
 		case 9 : 

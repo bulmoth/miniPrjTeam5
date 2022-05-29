@@ -13,7 +13,7 @@ public class AdoptRegMem {
 	
 	public void adoptRegMem() {
 		
-		if(Member.loginUserNo == 0) {
+		if(Member.LOGIN_USER_NO == 0) {
 			System.out.println("로그인한 회원만 이용하실 수 있습니다.");
 			return;
 		}
@@ -96,7 +96,7 @@ public class AdoptRegMem {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt2 = conn.prepareStatement(sql2);
-			pstmt2.setInt(1, Member.loginUserNo);
+			pstmt2.setInt(1, Member.LOGIN_USER_NO);
 			rs = pstmt2.executeQuery();
 			if(rs.next()) {
 				mem_id = rs.getString("MEM_ID");
@@ -141,7 +141,7 @@ public class AdoptRegMem {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt2 = conn.prepareStatement(sql2);
-			pstmt2.setInt(1, Member.loginUserNo);
+			pstmt2.setInt(1, Member.LOGIN_USER_NO);
 			rs = pstmt2.executeQuery();
 			if(rs.next()) {
 				mem_id = rs.getString("MEM_ID");

@@ -2,6 +2,7 @@ package productAddDelete;
 
 
 import adopt_reg.AdoptReg;
+import mgr_checkOrderList.CheckOrderList;
 import mgr_login.MgrLogin;
 import mgr_reply.M_Reply;
 import mgr_review.M_review;
@@ -50,7 +51,7 @@ public class AdminMain {
 			new A_0_product().itemMenu();
 			break;
 		case 3 : //오늘 매출 확인
-			//new CheckOrderList.check();
+			new CheckOrderList().check();
 			break;
 		case 4 : //입양 관리
 			new AdoptReg().adoptReg();

@@ -274,7 +274,7 @@ public class A_0_product {
 
 	        	}else { //상품번호가 없는 경우
 	            	System.out.println("해당하는 상품 번호가 없습니다. 상품번호를 다시 확인해주세요");
-	            	continue;
+	            
 	         	}
 	        	
 				}

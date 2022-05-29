@@ -17,11 +17,15 @@ public class CheckOrderList {
 	
 	public void check() {
 		while (true) {
-			System.out.println("========================");
+			System.out.println("============================");
+			System.out.println();
 			System.out.println("1. 오늘의 주문서 추가하기");
 			System.out.println("2. 오늘의 매출액 확인");
 			System.out.println("3. 회원별 구매액 확인");
-
+			System.out.println();
+			System.out.println("============================");
+			
+			
 			int n = MyUtil.scInt();
 			
 
@@ -52,7 +56,7 @@ public class CheckOrderList {
 				
 		//안내 문구 출력
 		//입력 받기 ( 제목, 내용)
-		System.out.println("===== 오늘의 주문을 확인합니다.  =====");
+		System.out.println("======== 오늘의 주문을 확인합니다.  ========");
 		
 		Connection conn = OracleDB.getOracleConnection();
 		
@@ -113,6 +117,7 @@ public class CheckOrderList {
 					
 			
 	}//checkSale
+	
 	
 	
 	//오늘의 총 매출액 확인
@@ -184,7 +189,7 @@ public class CheckOrderList {
 			if(rs.next()) {
 				int totalPrice = rs.getInt("회원총구매액");
 				
-				System.out.println(inputMember + " 회원의 ");
+				System.out.println(inputMember + " 번 회원의 ");
 				System.out.println("총 구매액은 : " + totalPrice + " 원 입니다.");
 			}
 			
