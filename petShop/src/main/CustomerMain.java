@@ -1,6 +1,7 @@
 package main;
 
-import adopt_reg.AdoptRegMem;
+
+import adopt_reg.AdoptRegMem
 import cart.Cart;
 import member.Member;
 import question.Question;
