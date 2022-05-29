@@ -44,7 +44,7 @@ public class CustomerReview {
 		}
 		public void write() {
 			//작성자 == 로그인한 유저
-			if(Member.loginUserNo == 0) {
+			if(Member.LOGIN_USER_NO == 0) {
 				System.out.println("로그인 한 유저만 글을 쓸 수 있습니다.");
 				return;
 			}
@@ -71,7 +71,7 @@ public class CustomerReview {
 				pstmt.setString(1, title);
 				pstmt.setString(2, content);
 				pstmt.setInt(3, score);
-				pstmt.setInt(4, Member.loginUserNo);
+				pstmt.setInt(4, Member.LOGIN_USER_NO);
 				int  result = pstmt.executeUpdate();
 				if(result == 1) {
 					System.out.println("리뷰 등록 성공 !");
