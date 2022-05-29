@@ -106,7 +106,6 @@ public class CustomerShop {
 					System.out.println();
 
 				}
-				
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -169,9 +168,12 @@ public class CustomerShop {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-		
 			
+			OracleDB.close(conn);
+
 		}
+		
+		AddtoCart();
 		
 	}//Catfood
 	
@@ -223,8 +225,11 @@ public class CustomerShop {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
+			OracleDB.close(conn);
 			
 		}
+		
+		AddtoCart();
 		
 	}//DogTreat
 	
@@ -274,8 +279,10 @@ public class CustomerShop {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			
+			OracleDB.close(conn);
 		}
+		
+		AddtoCart();
 		
 	}//CatTreat
 	
@@ -325,8 +332,10 @@ public class CustomerShop {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			
+			OracleDB.close(conn);
 		}
+		
+		AddtoCart();
 		
 	}//Toys
 	
@@ -376,14 +385,23 @@ public class CustomerShop {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			
+			OracleDB.close(conn);
 		}
+		
+		AddtoCart();
 		
 	}//Extra
 	
 	private void AddtoCart() {
 		
+		
 		selectNum = MyUtil.scInt();
+		
+		if(Member.LOGIN_USER_NO == 0) {
+			System.out.println("로그인 한 유저만 상품을 구매할 수 있습니다.");
+			System.out.println("================================");
+			return;
+		}
 		
 		System.out.println("===== 장바구니 담기 =====");
 		System.out.print("상품 번호 : ");
@@ -391,10 +409,10 @@ public class CustomerShop {
 		System.out.print("수량 : ");
 		int many = MyUtil.scInt();
 		
-		//장바구니 업데이트
+		//장바구니 업데이트 >>
 		Connection conn = OracleDB.getOracleConnection();
 		String sql = "INSERT INTO CART(CART_NO, MEM_NO, PRD_NO, COUNT)"
-				+"VALUES (CART_NO_SEQ, ?, ?, ?)";
+				+"VALUES (CART_NO_SEQ.NEXTVAL, ?, ?, ?)";
 		
 		PreparedStatement pstmt = null;
 		try {
@@ -407,7 +425,7 @@ public class CustomerShop {
 			
 			if(result == 1) {
 				System.out.println("상품이 성공적으로 담겼습니다.");
-				return;
+				GotoCart();
 			}else {
 				System.out.println("상품 전달 실패...");
 			}
