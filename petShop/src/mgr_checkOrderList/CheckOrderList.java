@@ -22,6 +22,7 @@ public class CheckOrderList {
 			System.out.println("1. 오늘의 주문서 추가하기");
 			System.out.println("2. 오늘의 매출액 확인");
 			System.out.println("3. 회원별 구매액 확인");
+			System.out.println("4. 관리자 메인 페이지");
 			System.out.println();
 			System.out.println("============================");
 			
@@ -37,8 +38,7 @@ public class CheckOrderList {
 			case 3:
 				checkMemberAmount();	break;
 			case 4:
-				
-				break;
+				return;
 			
 			default:
 				System.out.println("다시 선택하세요");

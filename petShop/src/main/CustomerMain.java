@@ -1,7 +1,7 @@
 package main;
 
 
-import adopt_reg.AdoptRegMem
+import adopt_reg.AdoptRegMem;
 import cart.Cart;
 import member.Member;
 import question.Question;
@@ -23,13 +23,13 @@ public class CustomerMain {
 		System.out.println();
 		System.out.println("1. 회원가입");
 		System.out.println("2. 로그인");
-		System.out.println("3. 상품 구매");
-		System.out.println("4. 배송 조회");
+		System.out.println("3. 회원 정보 수정");
+		System.out.println("4. 상품 구매");
 		System.out.println("5. 장바구니");
-		System.out.println("6. 리뷰 작성");
-		System.out.println("7. 입양");
-		System.out.println("8. 호텔 신청");
-		System.out.println("9 고객 센터 문의");
+		System.out.println("6. 주문 조회");
+		System.out.println("7. 리뷰 작성");
+		System.out.println("8. 입양");
+		System.out.println("9. 고객 센터 문의");
 		System.out.println();
 		System.out.println("---------------------");
 		
@@ -37,27 +37,30 @@ public class CustomerMain {
 		
 		switch(selectNum) {
 		case 1 : 
-			new Member().join(); break; //회원가입
+			new Member().create(); break; //회원가입
 		case 2 : 
 			new Member().login();break; // 로그인
 		case 3 : 
-			new CustomerShop().Shop(); break; //상품구매
+			new Member().update(); break; //회원정보 수정
 		case 4 : 
-			break; //배송 조회
+			new CustomerShop().Shop(); break; //상품구매
 		case 5 : 
 			new Cart().cartShow(); break; //장바구니
 		case 6 : 
-			new CustomerReview().ReviewMain(); break; // 리뷰 페이지
+//			new  break; // 리뷰 페이지
 		case 7 : 
-			new AdoptRegMem().adoptRegMem(); break; //입양
+			new CustomerReview().ReviewMain(); break;
 		case 8 : 
-			break; //호텔 신청
+			new AdoptRegMem().adoptRegMem(); break; //입양
 		case 9 : 
-			new Question().write(); break; //고객센터 문의
+			new Question().qMain(); break; //고객센터 문의
 			
 		default : System.out.println("선택하신 메뉴는 유효하지 않습니다."); CustomMain();
 		}
 	}
+		
+		
+		
 
 	}
 

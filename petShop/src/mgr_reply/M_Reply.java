@@ -76,6 +76,8 @@ public class M_Reply {
 				System.out.print("질문 날짜");
 				System.out.println("\n=======================================");
 				
+				while(rs.next()) {
+				
 				int no = rs.getInt("MEM_NO");
 				String title = rs.getString("QES_TITLE");
 				String comment = rs.getString("QES_CONTENTS");
@@ -92,7 +94,7 @@ public class M_Reply {
 				System.out.print(" | ");
 				System.out.print(rdate);
 				
-				
+				}
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -192,6 +194,7 @@ public class M_Reply {
 				System.out.print("답글 작성일");
 				System.out.println("\n-----------------------------");
 				
+				while(rs.next()) {
 				int no = rs.getInt("REP_NO");
 				String comment = rs.getString("REP_COMMENT");
 				Date rdate = rs.getDate("REP_DATE");
@@ -202,7 +205,7 @@ public class M_Reply {
 				System.out.print(" | ");
 				System.out.print(rdate);
 				
-				
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}finally{
