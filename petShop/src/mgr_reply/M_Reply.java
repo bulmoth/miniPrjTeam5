@@ -23,19 +23,19 @@ public class M_Reply {
 		while(true) {
 			
 			System.out.println("========================");
+			System.out.println();
 			System.out.println("1. 문의글 확인하기");
-			System.out.println("2. 답변 하기");
-			System.out.println("3. 답변 목록 확인하기");
-			System.out.println("4. 상위 목록으로 이동");
+			System.out.println("2. 답변 목록 확인하기");
+			System.out.println("3. 상위 목록으로 이동");
+			System.out.println();
 			System.out.println("========================");
 			
 			int n = MyUtil.scInt();
 			
 			switch(n) {
 			case 1 : showQesList(); break;
-			case 2 : mgrReply(); break;
-			case 3 : showReply(); break;
-			case 4 : return;
+			case 2 : showReply(); break;
+			case 3 : return;
 			
 			default : System.out.println("다시 선택하세요");
 		
@@ -102,7 +102,9 @@ public class M_Reply {
 				OracleDB.close(rs);
 			}
 			
-								
+			
+			//답변 할 번호 선택 메서드로 이어지도록
+			mgrReply();		
 		}//showQesList
 	
 		
@@ -188,7 +190,7 @@ public class M_Reply {
 				System.out.print("답변 내용");
 				System.out.print(" | ");
 				System.out.print("답글 작성일");
-				System.out.println("\n=======================================");
+				System.out.println("\n-----------------------------");
 				
 				int no = rs.getInt("REP_NO");
 				String comment = rs.getString("REP_COMMENT");
