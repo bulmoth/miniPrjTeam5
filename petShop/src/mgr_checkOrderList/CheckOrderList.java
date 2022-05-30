@@ -11,7 +11,6 @@ import util.MyUtil;
 
 
 
-
 public class CheckOrderList {
 
 	
@@ -22,7 +21,7 @@ public class CheckOrderList {
 			System.out.println("1. 오늘의 주문서 추가하기");
 			System.out.println("2. 오늘의 매출액 확인");
 			System.out.println("3. 회원별 구매액 확인");
-			System.out.println("4. 관리자 메인 페이지");
+			System.out.println("4. 관리자 메뉴로 돌아가기");
 			System.out.println();
 			System.out.println("============================");
 			
@@ -61,8 +60,8 @@ public class CheckOrderList {
 		Connection conn = OracleDB.getOracleConnection();
 		
 //		2. SELECT 쿼리 날리기
-		String sql = "INSERT INTO PETSHOP_SALES(PS_NO, O_NO, O_PRICE)"
-				+ "SELECT 주문서테이블.넘버, 주문서테이블.주문번호, 주문서테이블.주문금액 FROM 주문서테이블";
+		String sql = "INSERT INTO PETSHOP_SALES(PS_NO, O_NO, O_COUNT)"
+				+ "SELECT ORDER_TBL.mem_no, ORDER_TBL.ord_no, ORDER_TBL.ord_cnt FROM ORDER_TBL";
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -75,9 +74,11 @@ public class CheckOrderList {
 				
 				rs = pstmt.executeQuery();
 				
-				System.out.print("정산 번호");
+				System.out.print("회원 번호");
 				System.out.print(" | ");
 				System.out.print("주문 번호");
+				System.out.print(" | ");
+				System.out.print("주문 수량");
 				System.out.print(" | ");
 				System.out.print("주문 금액");
 				System.out.print(" | ");
@@ -87,9 +88,10 @@ public class CheckOrderList {
 				
 				while(rs.next()) {
 					
-					int no = rs.getInt("PS_NO"); //게시글 번호
+					int no = rs.getInt("PS_NO"); //회원 번호
 					int no2 = rs.getInt("O_NO"); //주문 번호
-					int no3 = rs.getInt("O_PRICE"); //주문 금액
+					int no3 = rs.getInt("O_COUNT"); //주문 수량
+					int no4 = 총 금액변수따준거;
 					Date rs2 = rs.getDate("O_DATE"); //주문 날짜
 					
 					
@@ -98,6 +100,8 @@ public class CheckOrderList {
 					System.out.print(no2);
 					System.out.print(" | ");
 					System.out.print(no3);
+					System.out.print(" | ");
+					System.out.print(no4);
 					System.out.print(" | ");
 					System.out.print(rs2);
 					System.out.println();		
@@ -128,7 +132,7 @@ public class CheckOrderList {
 		
 		Connection conn = OracleDB.getOracleConnection();
 		
-		String sql = "SELECT SUM(O_PRICE) 오늘총매출 FROM PETSHOP_SALES WHERE TO_CHAR(O_DATE,'YY/MM/DD')= ? ";
+		String sql = "SELECT SUM(O_COUNT) FROM PETSHOP_SALES WHERE TO_CHAR(O_DATE,'YY/MM/DD')= ? ";
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -142,10 +146,10 @@ public class CheckOrderList {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				String totalPrice = rs.getString("오늘총매출");
+				int totalCount = rs.getInt("O_COUNT");
 				
-				System.out.println(inputDate + " 일의 ");
-				System.out.println("총 매출액은 : " + totalPrice + " 원 입니다.");
+				System.out.println(inputDate + " 일의 총 주문 수량은" + totalCount + " 이고,");
+				System.out.println("총 매출액은 : " + 알려준변수 + " 원 입니다.");
 			}
 			
 			
@@ -174,7 +178,7 @@ public class CheckOrderList {
 		
 		Connection conn = OracleDB.getOracleConnection();
 		//넘버에 봐서 회원번호로할지 물건번호로 할지 체크
-		String sql = "SELECT PS_DATE, SUM(O_PRICE) 회원총구매액 FROM PETSHOP_SALES WHERE O_NO = ?";
+		String sql = "SELECT SUM(O_COUNT) FROM PETSHOP_SALES WHERE PS_NO = ?";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -187,10 +191,10 @@ public class CheckOrderList {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				int totalPrice = rs.getInt("회원총구매액");
+				int totalCount = rs.getInt("회원총구매액");
 				
-				System.out.println(inputMember + " 번 회원의 ");
-				System.out.println("총 구매액은 : " + totalPrice + " 원 입니다.");
+				System.out.println(inputMember + " 번 회원의 총 주문 수량은 " + totalCount + " 이고, ");
+				System.out.println("총 구매액은 : " + 알려준변수 + " 원 입니다.");
 			}
 			
 			
