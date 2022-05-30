@@ -91,7 +91,7 @@ public class CheckOrderList {
 					int no = rs.getInt("PS_NO"); //회원 번호
 					int no2 = rs.getInt("O_NO"); //주문 번호
 					int no3 = rs.getInt("O_COUNT"); //주문 수량
-					int no4 = 총 금액변수따준거;
+					int no4 = totalAmt;
 					Date rs2 = rs.getDate("O_DATE"); //주문 날짜
 					
 					
@@ -149,7 +149,7 @@ public class CheckOrderList {
 				int totalCount = rs.getInt("O_COUNT");
 				
 				System.out.println(inputDate + " 일의 총 주문 수량은" + totalCount + " 이고,");
-				System.out.println("총 매출액은 : " + 알려준변수 + " 원 입니다.");
+				System.out.println("총 매출액은 : " + totalAmt + " 원 입니다.");
 			}
 			
 			
@@ -194,7 +194,7 @@ public class CheckOrderList {
 				int totalCount = rs.getInt("회원총구매액");
 				
 				System.out.println(inputMember + " 번 회원의 총 주문 수량은 " + totalCount + " 이고, ");
-				System.out.println("총 구매액은 : " + 알려준변수 + " 원 입니다.");
+				System.out.println("총 구매액은 : " + totalAmt + " 원 입니다.");
 			}
 			
 			
