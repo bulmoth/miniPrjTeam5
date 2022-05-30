@@ -447,7 +447,7 @@ public class CustomerShop {
 		if (selectNum==1) {
 			System.out.println("장바구니로 이동합니다.");
 			System.out.println();
-			new Cart().cartShow(); //장바구니로 이동
+			new Cart().cartMain()); //장바구니로 이동
 		}else if (selectNum==2) {
 			System.out.println("상품 선택 페이지로 돌아갑니다.");
 			System.out.println();
