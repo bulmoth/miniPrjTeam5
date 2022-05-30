@@ -48,7 +48,7 @@ public class CheckOrderList {
 	}
 
 	
-	
+//	
 	
 	//오늘의 주문서 가져오기 
 	public void checkSale() {
@@ -61,11 +61,11 @@ public class CheckOrderList {
 		Connection conn = OracleDB.getOracleConnection();
 		
 //		2. SELECT 쿼리 날리기
-		String sql = "SELECT mem_no, ord_no, ord_cnt, order_date FROM ORDER_TBL";
+//		String sql = "SELECT mem_no, ord_no, ord_cnt, order_date FROM ORDER_TBL";
 		
+		String sql = "SELECT mem_no, ord_no, ord_cnt, order_date, PRICE * ord_cnt AS PRICE FROM ORDER_TBL JOIN PRODUCT USING(PRD_NO)";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
 		
 		
 		
@@ -91,7 +91,7 @@ public class CheckOrderList {
 					int no = rs.getInt("mem_no"); //회원 번호
 					int no2 = rs.getInt("ord_no"); //주문 번호
 					int no3 = rs.getInt("ord_cnt"); //주문 수량
-					int no4 = Order.totalAmt;
+					int no4 = rs.getInt("PRICE");
 					Date rs2 = rs.getDate("order_date"); //주문 날짜
 					
 					
