@@ -28,7 +28,7 @@ public class Question{
 		System.out.println("4. 메인 페이지로 돌아가기");
 		System.out.println("----------------------------");
 		
-		selectNum = MyUtil.sc.nextInt();
+		selectNum = MyUtil.scInt();
 		
 		switch(selectNum) {
 		case 1 : 
