@@ -139,7 +139,7 @@ public class Order {
 				String ordStat = rs.getString("ORD_STATUS");		// 주문상태
 				String delDate = rs.getString("DEL_DATE");			// 배송예정일
 				int total = rs.getInt("TOTAL");						// 총 금액
-				
+
 				totalAmt = total;
 				
 				System.out.print(ordDate.substring(0, 10));

@@ -45,7 +45,7 @@ public class CustomerMain {
 		case 4 : 
 			new CustomerShop().Shop(); break; //상품구매
 		case 5 : 
-			new Cart().cartShow(); break; //장바구니
+			new Cart().cartMain(); break; //장바구니
 		case 6 : 
 //			new  break; // 리뷰 페이지
 		case 7 : 
