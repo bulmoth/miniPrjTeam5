@@ -4,6 +4,7 @@ package main;
 import adopt_reg.AdoptRegMem;
 import cart.Cart;
 import member.Member;
+import order.Order;
 import question.Question;
 import util.MyUtil;
 
@@ -47,7 +48,7 @@ public class CustomerMain {
 		case 5 : 
 			new Cart().cartMain(); break; //장바구니
 		case 6 : 
-//			new  break; // 리뷰 페이지
+			new Order().orderMain();  break; //주문 조회
 		case 7 : 
 			new CustomerReview().ReviewMain(); break;
 		case 8 : 
