@@ -18,7 +18,7 @@ public class Order {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	Connection conn = null;
-	int totalAmt;
+	public static int totalAmt;
 	
 	// 주문 메인 메서드
 	public void orderMain() {
