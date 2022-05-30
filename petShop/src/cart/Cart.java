@@ -363,7 +363,7 @@ public class Cart {
 			for(int i = 0; i < cnt; i++) {
 				
 				String sql = "INSERT INTO ORDER_TBL(ORD_NO, MEM_NO, PRD_NO, ORD_CNT, ORDER_DATE, WAYBILL_NO, ORD_STATUS, DEL_DATE)"
-						+ "VALUES(ORD_NO_SEQ.NEXTVAL, ?, ?, ?, SYSDATE, ?, '주문완료', SYSDATE+3)";
+						+ "VALUES(ORD_NO_SEQ.NEXTVAL, ?, ?, ?, TO_CHAR(SYSDATE, 'yyyyMMdd'), ?, '주문완료', TO_CHAR(SYSDATE+3, 'yyyyMMdd'))";
 				PreparedStatement pstmt = null;
 
 				try {

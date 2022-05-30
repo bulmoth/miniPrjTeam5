@@ -142,13 +142,13 @@ public class Order {
 
 				totalAmt = total;
 				
-				System.out.print(ordDate.substring(0, 10));
+				System.out.print(ordDate);
 				System.out.print(" | ");
 				System.out.print(wbNo);
 				System.out.print(" | ");
 				System.out.print(ordStat);
 				System.out.print(" | ");
-				System.out.print(delDate.substring(0, 10));
+				System.out.print(delDate);
 				System.out.print(" | ");
 				System.out.print(total);
 				System.out.println();
