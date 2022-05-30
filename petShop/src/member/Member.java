@@ -106,59 +106,48 @@ public class Member {
 			 printMessage("로그인 한 유저만 회원정보를 수정할 수 있습니다.");
 			return;
 		} 
-		printMessage("정말 회원 정보를 수정 하시겠습니까? 1 : 예, 2 : 아니요");
-		int selectNum = MyUtil.scInt();
-		
-		if(selectNum == 1) {
-			printMessage("수정 할 비밀번호 : ");
-			String rePwd = MyUtil.sc.nextLine();
-			printMessage("다시 한 번 수정할 비밀번호 : ");
-			String repwd2 = MyUtil.sc.nextLine();
-	
-			printMessage("수정 할 전화번호 : ");
-			int rePhone = MyUtil.scInt();
-			 printMessage("수정 할 주소 : ");
-			String reAddress = MyUtil.sc.nextLine();
-			//접속 얻기
-			Connection conn = OracleDB.getOracleConnection();
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			PreparedStatement pstmt2 = null;	
-			if(rePwd.equals(repwd2)) {
-				try {
-					String sql = "SELECT * FROM MEMBER WHERE MEM_NO = ?";
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setInt(1, LOGIN_USER_NO);
-					rs = pstmt.executeQuery();
-					String sqlUpdate = "UPDATE MEMBER SET MEM_PWD = ?, PHONE = ?, ADDRESS = ?"
-							+ "WHERE MEM_NO = ?";
-					pstmt2 = conn.prepareStatement(sqlUpdate);
-					pstmt2.setString(1, rePwd);
-					pstmt2.setInt(2, rePhone);
-					pstmt2.setString(3, reAddress);
-					pstmt2.setInt(4, LOGIN_USER_NO);		
-					int result = pstmt2.executeUpdate();
-					if(result == 1) {
-						 printMessage("회원정보 수정 완료!!!");
-					}else {
-						 printMessage("회원정보 수정 실패");
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} finally {
-					OracleDB.close(conn);
-					OracleDB.close(pstmt);
-					OracleDB.close(pstmt2);
-					OracleDB.close(rs);
-				}
-			}else{
-				printMessage("비밀번호가 서로 일치하지 않습니다.");
+		 printMessage("수정 할 비밀번호 : ");
+		String rePwd = MyUtil.sc.nextLine();
+		 printMessage("수정 할 전화번호 : ");
+		int rePhone = MyUtil.scInt();
+		 printMessage("수정 할 주소 : ");
+		String reAddress = MyUtil.sc.nextLine();
+		//접속 얻기
+		Connection conn = OracleDB.getOracleConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt2 = null;	
+		try {
+			String sql = "SELECT * FROM MEMBER WHERE MEM_NO = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, LOGIN_USER_NO);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				String pwd = rs.getString("MEM_PWD");
+				int phone = rs.getInt("PHONE");
+				String address = rs.getString("ADDRESS");			
+			}	
+			String sqlUpdate = "UPDATE MEMBER SET MEM_PWD = ?, PHONE = ?, ADDRESS = ?"
+					+ "WHERE MEM_NO = ?";
+			pstmt2 = conn.prepareStatement(sqlUpdate);
+			pstmt2.setString(1, rePwd);
+			pstmt2.setInt(2, rePhone);
+			pstmt2.setString(3, reAddress);
+			pstmt2.setInt(4, LOGIN_USER_NO);		
+			int result = pstmt2.executeUpdate();
+			if(result == 1) {
+				 printMessage("회원정보 수정 완료!!!");
+			}else {
+				 printMessage("회원정보 수정 실패");
 			}
-	}else if (selectNum == 2 ){
-		printMessage("메인 페이지로 돌아갑니다.");
-	} else {
-		printMessage("잘못된 선택입니다.");
-	}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			OracleDB.close(conn);
+			OracleDB.close(pstmt);
+			OracleDB.close(pstmt2);
+			OracleDB.close(rs);
+		}
 	}
 	private enum QuitType {
 		Y("탈퇴회원","Y"),N("활동회원","N");	
