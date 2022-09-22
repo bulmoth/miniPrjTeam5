@@ -1,2 +1,1 @@
-# miniPrjTema5
-미니 플젝 5조
+Java를 이용한 PetShop 프로젝트
